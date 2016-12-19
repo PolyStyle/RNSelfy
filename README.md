@@ -1,6 +1,6 @@
  
 
-### Selfy Client in React Native
+### PolyStyle Client in React Native
 ========
 
 working with:

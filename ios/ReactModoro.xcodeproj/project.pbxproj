@@ -815,6 +815,7 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 				);
 				INFOPLIST_FILE = ReactModoro/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -823,6 +824,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.selfy;
 				PRODUCT_NAME = ReactModoro;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -844,6 +846,7 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 				);
 				INFOPLIST_FILE = ReactModoro/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -852,6 +855,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.selfy;
 				PRODUCT_NAME = ReactModoro;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
