@@ -65,7 +65,7 @@ export function userOnboarded(){
 
 // this state is for isNew. 
 const initialState = {
-  isNew: false,
+  isNew: true,
 }
 
 export default function users (state = {}, action) { 
@@ -85,7 +85,7 @@ export default function users (state = {}, action) {
       return {
         ...state,
         [action.id]: action.user,
-        isNew: false,
+        isNew: true,
       }
     case ADD_MULTIPLE_USERS :
       return {
