@@ -7,19 +7,44 @@ const { height,width } = Dimensions.get('window')
 
 class OnboardingContainer extends Component {
   handleOnboardFinished = () => {
-      this.props.dispatch(userOnboarded())
+  	if(this.state.needed <= 0){
+    	this.props.dispatch(userOnboarded())
+  	}
   }
+  handlerSelection (id,active){
+  	console.log(id,active, '000')
+    const newCounter = active ? this.state.needed-1 : this.state.needed+1;
+    const isFinished = (newCounter <= 0); // if we have selected enough categories
+    this.setState({
+      needed: newCounter,
+      readyToFinish: isFinished
+    });
+    console.log(newCounter);
+  }
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      needed: 3, // the number of categories needed
+      readyToFinish: false, // when the user has selected at least x needed categories
+    }
+  }
+
   render () {
     return (
     	<View style={styles.container}>
     		<View style={styles.header}>
-    			<Text style={{fontFamily: 'AvenirNext-Bold'}}> Select 3 more categories</Text>
+    			{this.state.needed > 0 &&
+    				<Text style={{fontFamily: 'AvenirNext-Bold'}}> Select {this.state.needed} more categor{this.state.needed == 1 ? 'y' : 'ies'}</Text>
+    				|| 
+    				<Text style={{fontFamily: 'AvenirNext-Bold'}}> Add more categories, press Next when done</Text>
+    			}
     		</View>
     		<View style={styles.categoriesList}>
-    			<OnboardingListView />
+    			<OnboardingListView handlerSelection={this.handlerSelection.bind(this)}/>
     		</View>
     		<View style={styles.footer}>
-    			<CustomButton  cta={"Next"} active={false}/>
+    			<CustomButton cta={"Next"} active={this.state.readyToFinish} onPress={this.handleOnboardFinished.bind(this)} />
     		</View>
 		</View>
     )

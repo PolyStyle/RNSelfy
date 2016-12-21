@@ -85,7 +85,7 @@ export default function users (state = {}, action) {
       return {
         ...state,
         [action.id]: action.user,
-        isNew: true,
+        isNew: false,
       }
     case ADD_MULTIPLE_USERS :
       return {

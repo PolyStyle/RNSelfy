@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class OnboardingListView extends React.Component {
+class StreamListView extends React.Component {
 
   formatData(data) {
     // We're sorting by alphabetically so we need the alphabet

@@ -19,9 +19,9 @@ export default function Drawer (props) {
       <DrawerHeader />
       <DrawerTab
         title='Swipe'
-        selected={props.activeFooterTab === 'swipe'}
+        selected={props.activeFooterTab === 'stream'}
         onPress={() => {
-          props.onTabSelect('swipe')
+          props.onTabSelect('stream')
           props.close()
         }}
         icon={<IconEntypo name={'documents'} size={35}  />}

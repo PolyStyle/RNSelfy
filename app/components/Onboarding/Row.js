@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
+import React, { PropTypes, Component } from 'react'
+import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity} from 'react-native';
 const { height,width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     height: 250, 
     marginBottom: 1,
   },
-  selectButton: {
+  labelDeactive: {
     borderRadius: 2,
     alignItems: 'center',    
     justifyContent: 'center',
@@ -29,19 +29,65 @@ const styles = StyleSheet.create({
     marginLeft: 25,
     backgroundColor: '#fafafa',
     borderColor: '#fafafa',
+  },
+  labelActive: {
+    borderRadius: 2,
+    alignItems: 'center',    
+    justifyContent: 'center',
+    top: 183,
+    height: 42,
+    width: width-50,
+    marginLeft: 25,
+    backgroundColor: '#333',
+    borderColor: '#333',
+  },
+  textDeactive: {
+    fontFamily: 'AvenirNext-Bold',
+    color: '#333'
+  },
+  textActive: {
+    fontFamily: 'AvenirNext-Bold',
+    color: '#fff'
   }
 });
 
-const Row = (props) => (
-  <View style={styles.container}>
-    <TouchableOpacity onPress={props.onPress} >
-      <Image source={{ uri: props.picture.large}} style={styles.photo}>
-        <View style={styles.selectButton} >
-          <Text >{`${props.name}`}</Text>
-        </View>
-      </Image>
-    </TouchableOpacity>
-  </View>
-);
 
-export default Row;
+class Row extends Component {
+  static propTypes = {
+    onPress: PropTypes.func,
+    active: PropTypes.bool
+  }
+  constructor (props) {
+    super(props)
+    this.state = {
+      active: props.active,
+    }
+  }
+
+  onPress = () =>{
+    console.log(this.props);
+    const newState = !this.state.active;
+     this.setState({
+          active: newState
+        });
+ 
+    if(this.props.onPress) {
+      this.props.onPress(this.props.email,newState)
+    } 
+  }
+  render(){
+    return (
+      <View style={styles.container}>
+      <TouchableOpacity onPress={this.onPress.bind(this)} >
+        <Image source={this.state.active ? {uri:this.props.picture.active} : {uri:this.props.picture.deactive}} style={styles.photo}>
+          <View style={this.state.active ? styles.labelActive : styles.labelDeactive} >
+            <Text style={this.state.active ? styles.textActive : styles.textDeactive}>{`${this.props.name}`}</Text>
+          </View>
+        </Image>
+      </TouchableOpacity>
+    </View>
+    )
+  }
+}
+
+export default Row
