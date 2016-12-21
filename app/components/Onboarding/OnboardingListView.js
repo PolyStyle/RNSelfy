@@ -29,7 +29,7 @@ class OnboardingListView extends React.Component {
       const currentChar = alphabet[sectionId];
 
       // Get users whose first name starts with the current letter
-      const users = data.filter((user) => user.name.first.toUpperCase().indexOf(currentChar) === 0);
+      const users = data.filter((user) => user.name.toUpperCase().indexOf(currentChar) === 0);
 
       // If there are any users who have a first name starting with the current letter then we'll
       // add a new section otherwise we just skip over it
@@ -67,11 +67,7 @@ class OnboardingListView extends React.Component {
     const demoData = data = [
     {
       "gender": "male",
-      "name": {
-        "title": "mr",
-        "first": "aiden",
-        "last": "lucas"
-      },
+      "name": 'menstyle',
       "location": {
         "street": "1446 oak lawn ave",
         "city": "lakewood",
@@ -104,11 +100,7 @@ class OnboardingListView extends React.Component {
     },
     {
       "gender": "male",
-      "name": {
-        "title": "mr",
-        "first": "aiden",
-        "last": "lucas"
-      },
+      "name": 'classicstyle',
       "location": {
         "street": "1446 oak lawn ave",
         "city": "lakewood",
@@ -133,19 +125,15 @@ class OnboardingListView extends React.Component {
         "value": "294-55-5909"
       },
       "picture": {
-        "large": "https://s-media-cache-ak0.pinimg.com/474x/0d/01/a4/0d01a46bcfca1f1313f9e8ad5163e717.jpg",
-        "medium": "https://s-media-cache-ak0.pinimg.com/474x/0d/01/a4/0d01a46bcfca1f1313f9e8ad5163e717.jpg",
-        "thumbnail": "https://s-media-cache-ak0.pinimg.com/474x/0d/01/a4/0d01a46bcfca1f1313f9e8ad5163e717.jpg"
+        "large": "https://s-media-cache-ak0.pinimg.com/474x/8e/d1/48/8ed148983aad7bdfa23f9335bc4e80c7.jpg",
+        "medium": "https://s-media-cache-ak0.pinimg.com/474x/8e/d1/48/8ed148983aad7bdfa23f9335bc4e80c7.jpg",
+        "thumbnail": "https://s-media-cache-ak0.pinimg.com/474x/8e/d1/48/8ed148983aad7bdfa23f9335bc4e80c7.jpg"
       },
       "nat": "US"
     },
     {
       "gender": "male",
-      "name": {
-        "title": "mr",
-        "first": "aiden",
-        "last": "lucas"
-      },
+      "name": 'girlstyle',
       "location": {
         "street": "1446 oak lawn ave",
         "city": "lakewood",
@@ -170,19 +158,15 @@ class OnboardingListView extends React.Component {
         "value": "294-55-5909"
       },
       "picture": {
-        "large": "https://s-media-cache-ak0.pinimg.com/474x/90/21/6e/90216e6a3d3ab4412a3bb87adbbd6063.jpg",
-        "medium": "https://s-media-cache-ak0.pinimg.com/474x/90/21/6e/90216e6a3d3ab4412a3bb87adbbd6063.jpg",
-        "thumbnail": "https://s-media-cache-ak0.pinimg.com/474x/90/21/6e/90216e6a3d3ab4412a3bb87adbbd6063.jpg"
+        "large": "https://s-media-cache-ak0.pinimg.com/474x/55/61/70/5561702507c19dc6eb97933a78f361bf.jpg",
+        "medium": "https://s-media-cache-ak0.pinimg.com/474x/55/61/70/5561702507c19dc6eb97933a78f361bf.jpg",
+        "thumbnail": "https://s-media-cache-ak0.pinimg.com/474x/55/61/70/5561702507c19dc6eb97933a78f361bf.jpg"
       },
       "nat": "US"
     },
     {
       "gender": "male",
-      "name": {
-        "title": "mr",
-        "first": "mario",
-        "last": "walters"
-      },
+      "name": 'sexystyle',
       "location": {
         "street": "8467 preston rd",
         "city": "allentown",

@@ -1,9 +1,8 @@
 import React, { PropTypes, Component } from 'react'
 import { View, Text, StyleSheet, Dimensions } from 'react-native'
-import { OnboardingListView }  from './../../components'
+import { OnboardingListView , CustomButton}  from './../../components'
 import { connect } from 'react-redux'
 import { userOnboarded } from './../../redux/modules/users'
-
 const { height,width } = Dimensions.get('window')
 
 class OnboardingContainer extends Component {
@@ -14,13 +13,13 @@ class OnboardingContainer extends Component {
     return (
     	<View style={styles.container}>
     		<View style={styles.header}>
-    			<Text> Select 3 more categories</Text>
+    			<Text style={{fontFamily: 'AvenirNext-Bold'}}> Select 3 more categories</Text>
     		</View>
     		<View style={styles.categoriesList}>
     			<OnboardingListView />
     		</View>
     		<View style={styles.footer}>
-    			<Text> Done </Text>
+    			<CustomButton  cta={"Next"} active={false}/>
     		</View>
 		</View>
     )
@@ -37,21 +36,26 @@ const styles = StyleSheet.create({
   header: {
   	width: width,
   	flex: 1,
-  	height: 50,
+  	height: 60,
     justifyContent: 'center',
-  	backgroundColor: '#ffcc00'
+  	borderColor: '#111111',
+  	borderBottomWidth: 1,    
+  	alignItems: 'center',
+    justifyContent: 'center',
   },
   footer: {
   	width: width,
   	flex: 1,
-  	height: 50,
+  	height: 60,
+  	borderColor: '#111111',
+  	borderTopWidth: 1,
+  	alignItems: 'center',
     justifyContent: 'center',
-  	backgroundColor: '#00ffcc'
   },
   categoriesList: {
   	flex: 1,
   	width: width,
-    height: height-100,
+    height: height-120,
   }
 })
 
