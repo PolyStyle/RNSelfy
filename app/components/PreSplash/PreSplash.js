@@ -1,43 +1,17 @@
 import React, { PropTypes, Component } from 'react'
-import { View, StyleSheet, Animated, Text } from 'react-native'
+import { View, StyleSheet, Image, Text, Dimensions } from 'react-native'
 import { colors } from './../../styles'
+const { height,width } = Dimensions.get('window')
 
 export default class PreSplash extends Component {
   static propTypes = {}
-  state = {
-    rotation: new Animated.Value(0)
-  }
-  componentDidMount () {
-    this.interval = setInterval(() => {
-      Animated.sequence([
-        Animated.timing(this.state.rotation, {toValue: -1, duration: 150}),
-        Animated.timing(this.state.rotation, {toValue: 1, duration: 150}),
-        Animated.timing(this.state.rotation, {toValue: 0, duration: 250})
-      ]).start()
-    }, 1000)
-  }
-  componentWillUnmount () {
-    window.clearInterval(this.interval)
-  }
-  getTransform () {
-    return {
-      transform: [
-        {
-          rotate: this.state.rotation.interpolate({
-            inputRange: [-1, 1],
-            outputRange: ['-20deg', '20deg']
-          })
-        }
-      ]
-    }
-  }
+
   render () {
     return (
       <View style={styles.container}>
-        <Text> Please Wait </Text>
-        <Animated.Image
-          style={[styles.image, this.getTransform()]}
-          source={require('../../images/logo.png')} />
+        <Image
+          style={[styles.image]}
+          source={require('../../images/logoLoading.png')} />
       </View>
     )
   }
@@ -51,7 +25,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
+    marginLeft: 10,
+    marginRight: 10,
+    width: width-20,
     resizeMode: 'contain',
-    height: 300,
   }
 })

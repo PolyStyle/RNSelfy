@@ -11,34 +11,43 @@ Splash.propTypes = {
 export default function Splash (props) {
   return (
     <View style={styles.container}>
-      <View>
-        <Image style={styles.image} source={require('../../images/logo.png')} />
-      </View>
-      <View style={styles.loginContainer}>
-        <LoginButton
-          readPermissions={['email','public_profile']}
-          style={{
-            height: 30,
-            width: 180,
-            marginBottom: 15,
-          }}
-          onLoginFinished={props.onLoginFinished}/>
-        <Text style={styles.assuranceText}>
-          Don't worry. We don't post anything to Facebook.
-        </Text>
-      </View>
+      <Image source={ require('../../images/openingBackground.jpg')} resizeMode='cover' style={styles.backgroundColorContainer}>  
+        <View>
+          <Image style={styles.image} source={require('../../images/logoType.png')} />
+        </View>
+        <View style={styles.loginContainer}>
+          <LoginButton
+            readPermissions={['email','public_profile']}
+            style={{
+              height: 30,
+              width: 180,
+              marginBottom: 15,
+            }}
+            onLoginFinished={props.onLoginFinished}/>
+          <Text style={styles.assuranceText}>
+            Don't worry. We don't post anything.
+          </Text>
+        </View>
+      </Image>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  backgroundColorContainer: {
+    flex: 1,
+    width: undefined,
+    height: undefined,
+    backgroundColor:'transparent',
+    flexDirection:'column',
+    alignItems:'center',
+    justifyContent:'center'
+  },
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+    backgroundColor:'#713ef1',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 50,
-    paddingBottom: 40,
   },
   slogan: {
     color: colors.blue,
@@ -47,7 +56,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   image: {
-    width: width,
+    marginLeft: 10,
+    marginRight: 10,
+    width: width-20,
     resizeMode: 'contain',
     height: height * .4 > 300 ? 300 : height * .4
   },
@@ -57,7 +68,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   assuranceText: {
-    color: colors.secondary,
+    color: '#ffffff',
     fontSize: fontSizes.secondary,
     textAlign: 'center',
   },
