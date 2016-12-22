@@ -1,0 +1,58 @@
+import React, { PropTypes, Component } from 'react'
+import { View, TouchableOpacity ,StyleSheet,  Text} from 'react-native'
+
+const styles = StyleSheet.create({
+  labelContainer: {
+    borderRadius: 5,
+    backgroundColor: '#333333',
+    marginLeft: 1,
+    marginRight: 1,
+  },
+  touchArea: {
+    backgroundColor: 'transparent'
+  },
+  labelText: {
+    color: "#ffffff", 
+    fontSize: 12
+  }
+
+});
+
+
+class TagLabel extends Component {
+  static propTypes = {
+    description: PropTypes.string.isRequired,
+    onPress: PropTypes.func,
+  };
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      active: props.active,
+    }
+  };
+
+  onPress() {
+    const newState = !this.state.active;
+     this.setState({
+          active: newState
+        });
+ 
+    if(this.props.onPress) {
+      this.props.onPress(this.props.email,newState)
+    } 
+  }
+
+ render(){
+    return (
+    <View style={styles.labelContainer} >
+      <TouchableOpacity style={styles.touchArea}  onPress={this.onPress.bind(this)}>
+        <Text  style={styles.labelText}> {this.props.description} </Text>
+     </TouchableOpacity>
+   </View>
+    )
+  }
+
+}
+
+export default TagLabel

@@ -1,121 +1,74 @@
 import React, { PropTypes, Component } from 'react'
-import { ListView, Text, View  } from 'react-native'
-import { Leaderboard } from './../../components'
-import { connect } from 'react-redux' 
-import Leader from './../../components/Leaderboard/Leader'
-import Header from './../../components/Leaderboard/Header'
+import { StyleSheet, Text, View ,Dimensions, Platform } from 'react-native'
+import { connect } from 'react-redux'
+import { ReactModoroNavbar, StreamListView , CustomButton, Gear}  from './../../components'
+import { userOnboarded } from './../../redux/modules/users'
+const { height,width } = Dimensions.get('window')
 
-let goldenUsers = [
-];
+class StreamContainer extends Component {
+  handleOnboardFinished = () => {
+    if(this.state.needed <= 0){
+      this.props.dispatch(userOnboarded())
+    }
+  }
 
-class Stream extends Component {
-   
-  static propTypes = { 
-    leaders: PropTypes.array.isRequired,
-    openDrawer: PropTypes.func,
-    navigator: PropTypes.object.isRequired,
+
+  handlerSelection (id,active){
+    console.log(id,active, '000')
+    const newCounter = active ? this.state.needed-1 : this.state.needed+1;
+    const isFinished = (newCounter <= 0); // if we have selected enough categories
+    this.setState({
+      needed: newCounter,
+      readyToFinish: isFinished
+    });
+    console.log(newCounter);
   }
 
   constructor (props) {
     super(props)
-    this.dataSource = new ListView.DataSource({
-        rowHasChanged: (r1, r2) => r1 !== r2,
-        sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-      });
     this.state = {
-      modal: false,
-      dataSource: this.dataSource.cloneWithRowsAndSections(this.convertListArrayToMap())
+      needed: 3, // the number of categories needed
+      readyToFinish: false, // when the user has selected at least x needed categories
     }
-  }
-
-  componentDidMount () {
-    if (this.props.listenerSet === false) {
-    }
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.leaders !== this.props.leaders) {
-      this.setState({
-        // replace food with nextProps.leaders
-        dataSource: this.dataSource.cloneWithRowsAndSections(this.convertListArrayToMap())
-      })
-    }
-  }
-
-  renderRow = ({displayName, photoURL, score}) => {
-    return (
-        <Leader openProfileFunction={this._seeProfile.bind(this)} name={displayName} avatar={photoURL} score={score} />
-      )
-  }
-
-  renderSectionHeader(sectionData, category) {
-    console.log('----header ----')
-    console.log(sectionData, category)
-    return <Header name={category} />
- 
-  } 
-
-  handleToSettings = () => {
-    this.props.navigator.push({
-      settings: true
-    })
-  }
-
-  convertListArrayToMap = () =>  {
-    var goldenCategoryMap = {}; // Create the blank map
-    const FRIENDS = 'Friends';
-    const FOLLOWING = 'Following';
-    console.log('FROM THE LEADERBOARD PANNEL -------------')
-    console.log(this.props.friends);
-    console.log(this.props.subscribing);
-
-    // ADD FRIENDS 
-    this.props.friends.forEach(function(friend) {
-      if (!goldenCategoryMap[FRIENDS]) {
-        // Create an entry in the map for the category if it hasn't yet been created
-        goldenCategoryMap[FRIENDS] = [];
-      } 
-      friend.photoURL = 'https://s-media-cache-ak0.pinimg.com/236x/f7/fb/a1/f7fba18994c65d1fc95d20d7fe63389f.jpg';
-      friend.score = 1234;
-      goldenCategoryMap[FRIENDS].push(friend);
-    });
-
-    // ADD SUBSCRIBING 
-    this.props.subscribing.forEach(function(subscribing) {
-      if (!goldenCategoryMap[FOLLOWING]) {
-        // Create an entry in the map for the category if it hasn't yet been created
-        goldenCategoryMap[FOLLOWING] = [];
-      } 
-      subscribing.photoURL = 'https://s-media-cache-ak0.pinimg.com/236x/f7/fb/a1/f7fba18994c65d1fc95d20d7fe63389f.jpg';
-      subscribing.score = 4321;
-      goldenCategoryMap[FOLLOWING].push(subscribing);
-    });
-
-
-    console.log('finished')
-    return goldenCategoryMap;
-  }
-
-  _seeProfile(){
-    this.setState({
-        modal: true
-      })
-  }
-
-  _closeProfile(){
-    this.setState({
-        modal: false
-      })
   }
 
   render () {
     return (
-      <View>
-      <Text> Stream </Text>
-      </View>
+      <View style={styles.container}>
+        <ReactModoroNavbar
+                title='Stream' 
+        />
+        <View style={styles.categoriesList}>
+          <StreamListView handlerSelection={this.handlerSelection.bind(this)}/>
+        </View>
+    </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#ffffff',
+  },
+ 
+  footer: {
+    width: width,
+    flex: 1,
+    height: 60,
+    borderColor: '#111111',
+    borderTopWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  categoriesList: {
+    flex: 1,
+    width: width,
+    height: height-60,
+    padding: 0
+  }
+})
+
 
 function mapStateToProps ({scores, users}) {
   return { 
@@ -130,6 +83,5 @@ function mapStateToProps ({scores, users}) {
   }
 }
 
-export default connect(
-  mapStateToProps
-)(Stream)
+
+export default connect()(StreamContainer)

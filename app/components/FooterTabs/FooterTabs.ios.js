@@ -16,7 +16,7 @@ export default function FooterTabs (props) {
   return (
     <TabBarIOS tintColor={colors.active}>
       <Entypo.TabBarItem
-        iconSize={35}
+        iconSize={30}
         iconName='documents'
         title='Stream'
         selected={props.activeFooterTab === 'stream'}
@@ -24,7 +24,7 @@ export default function FooterTabs (props) {
           <StreamContainer navigator={props.navigator}/>
       </Entypo.TabBarItem>
       <Icon.TabBarItem
-        iconSize={35}
+        iconSize={30}
         iconName='ios-camera'
         title='Take Selfy'
         selected={props.activeFooterTab === 'takeSelfy'}
@@ -32,7 +32,7 @@ export default function FooterTabs (props) {
           <TakeSelfyContainer navigator={props.navigator}/>
       </Icon.TabBarItem>
       <Icon.TabBarItem
-        iconSize={35}
+        iconSize={30}
         iconName='ios-person'
         title='Me'
         selected={props.activeFooterTab === 'home'}
@@ -40,7 +40,7 @@ export default function FooterTabs (props) {
           <UserProfileContainer navigator={props.navigator}/>
       </Icon.TabBarItem>
       <IconFontAwsome.TabBarItem
-        iconSize={35}
+        iconSize={30}
         iconName='fire'
         title='Friends'
         selected={props.activeFooterTab === 'leaderboard'}

@@ -7,7 +7,7 @@ export function setFooterTab (tab) {
   }
 }
 
-const initialState = 'home'
+const initialState = 'stream'
 
 export default function activeFooterTabs (state = initialState, action) {
   switch (action.type) {
