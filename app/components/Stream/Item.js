@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity,TouchableHighlight} from 'react-native';
 import { Gear, Hamburger, Heart, TagLabel, MoreDots} from './../../components'
 const { height,width } = Dimensions.get('window');
 
@@ -55,8 +55,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginRight: 5,
-    marginTop: 5
+    right: 5,
+    top: 5,
+    position: 'absolute' 
   },
   tagList:{
     marginTop: 8,
@@ -94,38 +95,40 @@ class Item extends Component {
     });
   }
 
-  onPress = () =>{
-    console.log(this.props);
+  onPress = () =>{ 
     const newState = !this.state.active;
-     this.setState({
+    this.setState({
           active: newState
-        });
- 
+        }, function(){
     if(this.props.onPress) {
       this.props.onPress()
     } 
+
+  });
   }
 
   _navigate(){
   this.props.navigator.push({
       name: 'Post',
-      passProps: this.props
+      passProps: this.props,
+      passState: this.state
     })
   }
 
   render(){
     return (
-      <View style={styles.container}>
-       <Image source={{uri:this.props.picture}} style={{ width: this.state.width, height: this.state.height }}>
+      <View  shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true} style={styles.container}>
+        <TouchableHighlight onPress={this._navigate.bind(this)}>
+          <Image onPress={this._navigate.bind(this)} source={{uri:this.props.picture}} style={{ width: this.state.width, height: this.state.height }} />
+        </TouchableHighlight>
         <View style={styles.avatarContainer} >
-          <Text style={styles.avatarName}> nicolabortignon </Text>
-          <Image style={styles.avatar} source={{uri:this.props.avatar}} /> 
+            <Text style={styles.avatarName}> nicolabortignon </Text>
+            <Image style={styles.avatar} source={{uri:this.props.avatar}} /> 
         </View>
-       </Image>
        <View style={styles.descriptions}>
         <View style={styles.iconContainer}>
-          <Heart style={styles.heartIcon} onPress={this.onPress.bind(this)}/>
-          <MoreDots style={styles.addIcon} onPress={this._navigate.bind(this)}/>
+          <Heart active={this.state.active} style={styles.heartIcon} onPress={this.onPress.bind(this)}/>
+          <MoreDots style={styles.addIcon} />
         </View>
         <View style={styles.separationLine} />
         <Text style={styles.descriptionText}>This is a detail description of something long.</Text>

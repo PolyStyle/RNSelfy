@@ -11,6 +11,7 @@ Navbar.propTypes = {
 }
 
 export default function Navbar (props) {
+  
   const styles = StyleSheet.create({
     container: {
       flex: 1,

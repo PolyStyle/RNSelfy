@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { ScrollView, View, Text, StyleSheet, Image, Dimensions, TouchableOpacity} from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Image, Dimensions, TouchableOpacity, InteractionManager} from 'react-native';
 import { Gear, Hamburger, Heart, TagLabel, MoreDots} from './../../components'
 const { height,width } = Dimensions.get('window');
 
@@ -72,44 +72,24 @@ const styles = StyleSheet.create({
 
 class PostContainer extends Component {
   static propTypes = {
-    onPress: PropTypes.func,
-    active: PropTypes.bool
+    onPress: PropTypes.func
   }
   constructor (props) {
-    super(props)
-    this.state = {
-      active: props.active,
-    }
+    super(props) 
   }
   componentDidMount() {
-    // Set a ratio. We should allow picture with the height between 1/2 and 3/2 of the width
-    Image.getSize(this.props.picture, (srcWidth, srcHeight) => {
-      const maxHeight = Dimensions.get('window').height; // or something else
-      const maxWidth = Dimensions.get('window').width;
-      const imageRatio = srcWidth/srcHeight;
-      this.setState({ width: width, height: width/imageRatio });
-    }, error => {
-      console.log('error:', error);
-    });
+ 
   }
 
-  onPress = () =>{
-    console.log(this.props);
-    const newState = !this.state.active;
-     this.setState({
-          active: newState
-        });
- 
+  onPress = () =>{ 
     if(this.props.onPress) {
       this.props.onPress()
     } 
   }
-  render(){
-    console.log('**')
-    console.log(this.props)
+  render(){ 
     return (
       <ScrollView style={styles.container}>
-       <Image source={{uri:this.props.picture }} style={{ width: this.state.width, height: this.state.height }}>
+       <Image shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true} source={{uri:this.props.picture }} style={{ width: this.props.width, height: this.props.height }}>
         <View style={styles.avatarContainer} >
           <Text style={styles.avatarName}> nicolabortignon </Text>
           <Image style={styles.avatar} source={{uri:this.props.avatar}} /> 
@@ -117,7 +97,7 @@ class PostContainer extends Component {
        </Image>
        <View style={styles.descriptions}>
         <View style={styles.iconContainer}>
-          <Heart style={styles.heartIcon} onPress={this.onPress.bind(this)}/>
+          <Heart active={this.props.active} style={styles.heartIcon} onPress={this.onPress.bind(this)}/>
           <MoreDots style={styles.addIcon} onPress={this.onPress.bind(this)}/>
         </View>
         <View style={styles.separationLine} />

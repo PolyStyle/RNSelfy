@@ -8,37 +8,30 @@ import { colors } from './../../styles'
 class Heart extends Component {
   static propTypes = {
     size: PropTypes.number.isRequired,
- 
     onPress: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     size: 25,
+    active: false
   };
 
   constructor (props) {
     super(props)
-    this.state = {
-      active: props.active,
-    }
+
   };
 
   onPress() {
-    const newState = !this.state.active;
-     this.setState({
-          active: newState
-        });
- 
     if(this.props.onPress) {
-      this.props.onPress(this.props.email,newState)
+      this.props.onPress(this.props.email)
     } 
   }
 
  render(){
     return (
     <TouchableOpacity onPress={this.onPress.bind(this)}>
-      {!this.state.active && <Icon name='ios-heart-outline' size={this.props.size} color={'#666'} />}
-      {this.state.active && <Icon name='ios-heart' size={this.props.size} color={'#19181b'} />}
+      {!this.props.active && <Icon name='ios-heart-outline' size={this.props.size} color={'#666'} />}
+      {this.props.active && <Icon name='ios-heart' size={this.props.size} color={'#19181b'} />}
     </TouchableOpacity>
     )
   }

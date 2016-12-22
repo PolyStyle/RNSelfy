@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { StyleSheet, Text, View ,Dimensions, Platform, Navigator } from 'react-native'
+import { TouchableHighlight, StyleSheet, Text, View ,Dimensions, Platform, Navigator } from 'react-native'
 import { connect } from 'react-redux'
 import { Navbar, StreamListView , CustomButton, Gear}  from './../../components'
 import { userOnboarded } from './../../redux/modules/users'
@@ -33,34 +33,63 @@ class StreamContainer extends Component {
     }
   }
 
+
   render () {
+    const NavigationBarRouteMapper = {
+      LeftButton(route, navigator, index, navState) {
+        if(index > 0) {
+          return (
+            <TouchableHighlight
+               underlayColor="transparent"
+               onPress={() => { if (index > 0) { navigator.pop() } }}>
+              <Text style={ styles.leftNavButtonText }>Back</Text>
+            </TouchableHighlight>
+        )} 
+        else { return null }
+      },
+      RightButton(route, navigator, index, navState) {
+        if (route.onPress) return ( <TouchableHighlight
+                                    onPress={ () => route.onPress() }>
+                                    <Text style={ styles.rightNavButtonText }>
+                                        { route.rightText || 'Right Button' }
+                                    </Text>
+                                  </TouchableHighlight> )
+      },
+      Title(route, navigator, index, navState) {
+        return <Text style={ styles.textTitle }>{route.name}</Text>
+      }
+    };
+
+
     return (
       <View style={styles.container}>
         <Navigator
+
+          navigationBar={
+             <Navigator.NavigationBar 
+               style={ styles.header } 
+               routeMapper={NavigationBarRouteMapper} />} 
+
+
           initialRoute={{ name: 'Stream', index: 0 }}
           renderScene={(route, navigator) => {
             if(route.name == 'Stream'){
-              return (
-                <View>
-                <Navbar title='Stream' />
+              return (  
                 <View style={styles.categoriesList}>
                 <StreamListView navigator={navigator}  handlerSelection={this.handlerSelection.bind(this)}/>
-                </View>
                 </View>
                 )
             }
             if(route.name == 'Post'){
               return (
-                <View>
-                <Navbar title='Post' />
-                  <View style={styles.categoriesList}>
-                  <PostContainer {...route.passProps} />
-                  </View>
+                <View style={styles.categoriesList}>
+                  <PostContainer {...route.passProps} {...route.passState} />
                 </View>
               )
             }
           }}
            />
+        
         </View>
     )
   }
@@ -71,7 +100,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
   },
- 
+  textTitle: {
+      fontFamily: 'AvenirNext-Bold'
+  },
+  header: {
+      width: width,
+      height: 50,
+      borderColor: '#111111',
+      borderBottomWidth: 1,
+
+    },
   footer: {
     width: width,
     flex: 1,
@@ -82,6 +120,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   categoriesList: {
+    marginTop: 50,
     flex: 1,
     width: width,
     height: height-60,

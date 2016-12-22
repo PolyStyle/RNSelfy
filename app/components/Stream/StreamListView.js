@@ -102,6 +102,66 @@ class StreamListView extends React.Component {
           brandName: 'Adidas'
         }
       ]
+    },
+    {
+      "name": 'theUserName',
+      "picture": "https://s-media-cache-ak0.pinimg.com/474x/93/49/a3/9349a3e4bf4dada75c138d8e4c88894f.jpg",
+      "avatar": "https://s-media-cache-ak0.pinimg.com/474x/cb/ac/0d/cbac0d21637d082abef830814709b7db.jpg",
+      "items": [
+        {
+          name: 'Shoes',
+          brandId: '1',
+          brandName: 'Adidas'
+        }
+      ]
+    },
+    {
+      "name": 'theUserName',
+      "picture": "https://s-media-cache-ak0.pinimg.com/474x/93/49/a3/9349a3e4bf4dada75c138d8e4c88894f.jpg",
+      "avatar": "https://s-media-cache-ak0.pinimg.com/474x/cb/ac/0d/cbac0d21637d082abef830814709b7db.jpg",
+      "items": [
+        {
+          name: 'Shoes',
+          brandId: '1',
+          brandName: 'Adidas'
+        }
+      ]
+    },
+    {
+      "name": 'theUserName',
+      "picture": "https://s-media-cache-ak0.pinimg.com/474x/93/49/a3/9349a3e4bf4dada75c138d8e4c88894f.jpg",
+      "avatar": "https://s-media-cache-ak0.pinimg.com/474x/cb/ac/0d/cbac0d21637d082abef830814709b7db.jpg",
+      "items": [
+        {
+          name: 'Shoes',
+          brandId: '1',
+          brandName: 'Adidas'
+        }
+      ]
+    },
+    {
+      "name": 'theUserName',
+      "picture": "https://s-media-cache-ak0.pinimg.com/474x/93/49/a3/9349a3e4bf4dada75c138d8e4c88894f.jpg",
+      "avatar": "https://s-media-cache-ak0.pinimg.com/474x/cb/ac/0d/cbac0d21637d082abef830814709b7db.jpg",
+      "items": [
+        {
+          name: 'Shoes',
+          brandId: '1',
+          brandName: 'Adidas'
+        }
+      ]
+    },
+    {
+      "name": 'theUserName',
+      "picture": "https://s-media-cache-ak0.pinimg.com/474x/93/49/a3/9349a3e4bf4dada75c138d8e4c88894f.jpg",
+      "avatar": "https://s-media-cache-ak0.pinimg.com/474x/cb/ac/0d/cbac0d21637d082abef830814709b7db.jpg",
+      "items": [
+        {
+          name: 'Shoes',
+          brandId: '1',
+          brandName: 'Adidas'
+        }
+      ]
     }
 
     
@@ -131,6 +191,7 @@ class StreamListView extends React.Component {
   render() {
     return (
       <ListView 
+        initialListSize ={2}
         removeClippedSubviews={true} 
         style={styles.container}
         dataSource={this.state.dataSource}
