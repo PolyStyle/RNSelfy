@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
 
 
 
-class PostContainer extends Component {
+class ProductContainer extends Component {
   static propTypes = {
     onPress: PropTypes.func
   }
@@ -204,11 +204,10 @@ class PostContainer extends Component {
           showsHorizontalScrollIndicator={false}
             style={styles.productHolder}
             dataSource={this.state.dataSource}
-            renderRow={(rowData) => <View>
-                <TouchableOpacity style={styles.productItem} onPress={this._navigateToPost.bind(this)}> 
-                  <Image style={styles.roundedProduct} source={{uri:rowData.itemPicture }} />
-                  <Image style={styles.roundedBrand} source={{uri:rowData.brandPicture }} />
-                </TouchableOpacity>
+            renderRow={(rowData) => <View style={styles.productItem}>
+
+             <Image style={styles.roundedProduct} source={{uri:rowData.itemPicture }} />
+               <Image style={styles.roundedBrand} source={{uri:rowData.brandPicture }} />
               </View>}
           />
         </View>
@@ -219,11 +218,9 @@ class PostContainer extends Component {
             style={styles.productHolder}
              showsHorizontalScrollIndicator={false}
             dataSource={this.state.dataSource2}
-            renderRow={(rowData) => <View>
-                <TouchableOpacity style={styles.productItem} onPress={this._navigateToPost.bind(this)}> 
-                  <Image style={styles.roundedProduct} source={{uri:rowData.itemPicture }} />
-                  <Image style={styles.roundedBrand} source={{uri:rowData.brandPicture }} />
-                </TouchableOpacity>
+            renderRow={(rowData) => <View style={styles.productItem}>
+                <Image style={styles.roundedProduct} source={{uri:rowData.itemPicture }} />
+               <Image style={styles.roundedBrand} source={{uri:rowData.brandPicture }} />
               </View>}
           />
         </View>
@@ -234,4 +231,4 @@ class PostContainer extends Component {
   }
 }
 
-export default PostContainer
+export default ProductContainer

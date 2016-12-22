@@ -3,7 +3,7 @@ import { TouchableHighlight, StyleSheet, Text, View ,Dimensions, Platform, Navig
 import { connect } from 'react-redux'
 import { Navbar, StreamListView , CustomButton, Gear}  from './../../components'
 import { userOnboarded } from './../../redux/modules/users'
-import { PostContainer } from  './../../containers'
+import { PostContainer, UserProfileContainer, ProductContainer} from  './../../containers'
 const { height,width } = Dimensions.get('window')
 
 class StreamContainer extends Component {
@@ -56,7 +56,7 @@ class StreamContainer extends Component {
                                   </TouchableHighlight> )
       },
       Title(route, navigator, index, navState) {
-        return <Text style={ styles.textTitle }>{route.name}</Text>
+        return <Text style={ styles.textTitle }>{route.title}</Text>
       }
     };
 
@@ -71,7 +71,7 @@ class StreamContainer extends Component {
                routeMapper={NavigationBarRouteMapper} />} 
 
 
-          initialRoute={{ name: 'Stream', index: 0 }}
+          initialRoute={{ title: 'Stream', name: 'Stream', index: 0 }}
           renderScene={(route, navigator) => {
             if(route.name == 'Stream'){
               return (  
@@ -84,6 +84,20 @@ class StreamContainer extends Component {
               return (
                 <View style={styles.categoriesList}>
                   <PostContainer {...route.passProps} {...route.passState} />
+                </View>
+              )
+            }
+            if(route.name == 'User'){
+              return (
+                <View style={styles.categoriesList}>
+                  <UserProfileContainer {...route.passProps} {...route.passState} />
+                </View>
+              )
+            }
+            if(route.name == 'Product'){
+              return (
+                <View style={styles.categoriesList}>
+                  <ProductContainer {...route.passProps} {...route.passState} />
                 </View>
               )
             }
@@ -125,6 +139,10 @@ const styles = StyleSheet.create({
     width: width,
     height: height-60,
     padding: 0
+  },
+  leftNavButtonText: {
+    fontSize: 12,
+    marginLeft: 10
   }
 })
 

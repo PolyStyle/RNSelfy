@@ -107,9 +107,19 @@ class Item extends Component {
   });
   }
 
-  _navigate(){
+  _navigateToPost(){
   this.props.navigator.push({
       name: 'Post',
+      title: 'Post',
+      passProps: this.props,
+      passState: this.state
+    })
+  }
+
+  _navigateToUser(){
+  this.props.navigator.push({
+      name: 'User',
+      title: this.props.username,
       passProps: this.props,
       passState: this.state
     })
@@ -118,13 +128,15 @@ class Item extends Component {
   render(){
     return (
       <View  shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true} style={styles.container}>
-        <TouchableHighlight onPress={this._navigate.bind(this)}>
-          <Image onPress={this._navigate.bind(this)} source={{uri:this.props.picture}} style={{ width: this.state.width, height: this.state.height }} />
+        <TouchableHighlight onPress={this._navigateToPost.bind(this)}>
+          <Image onPress={this._navigateToPost.bind(this)} source={{uri:this.props.picture}} style={{ width: this.state.width, height: this.state.height }} />
         </TouchableHighlight>
+        <TouchableHighlight style={styles.avatarContainer} onPress={this._navigateToUser.bind(this)}>
         <View style={styles.avatarContainer} >
-            <Text style={styles.avatarName}> nicolabortignon </Text>
+            <Text style={styles.avatarName}> {this.props.username} </Text>
             <Image style={styles.avatar} source={{uri:this.props.avatar}} /> 
         </View>
+        </TouchableHighlight>
        <View style={styles.descriptions}>
         <View style={styles.iconContainer}>
           <Heart active={this.state.active} style={styles.heartIcon} onPress={this.onPress.bind(this)}/>

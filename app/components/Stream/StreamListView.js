@@ -58,7 +58,8 @@ class StreamListView extends React.Component {
     {
       "name": 'theUserName',
       "picture": "https://s-media-cache-ak0.pinimg.com/474x/17/e8/5c/17e85c532bb2e46b8b25b051da535de4.jpg",
-      "avatar": "https://s-media-cache-ak0.pinimg.com/474x/68/2d/4c/682d4c97619c67a56da0f1a7227f1352.jpg",
+      "avatar": "https://d13yacurqjgara.cloudfront.net/users/40224/screenshots/2589124/adidas_illustration.jpg",
+      "username": 'Adidas',
       "items": [
         {
           name: 'Shoes',
@@ -69,6 +70,7 @@ class StreamListView extends React.Component {
     },
     {
       "name": 'theUserName',
+      "username": 'Nicola Bortignon',
       "picture": "https://s-media-cache-ak0.pinimg.com/474x/1b/a4/8f/1ba48fa53de96f11bc6edcd2d0fe543a.jpg",
       "avatar": "https://s-media-cache-ak0.pinimg.com/474x/68/2d/4c/682d4c97619c67a56da0f1a7227f1352.jpg",
       "items": [
@@ -81,6 +83,7 @@ class StreamListView extends React.Component {
     },
     {
       "name": 'theUserName',
+      "username": 'Nicola Bortignon',
       "picture": "https://s-media-cache-ak0.pinimg.com/564x/0f/1a/41/0f1a411ecdc6fc65b617258a62596040.jpg",
       "avatar": "https://s-media-cache-ak0.pinimg.com/564x/68/2d/4c/682d4c97619c67a56da0f1a7227f1352.jpg",
       "items": [
@@ -93,6 +96,7 @@ class StreamListView extends React.Component {
     },
     {
       "name": 'theUserName',
+      "username": 'Nicola Bortignon',
       "picture": "https://s-media-cache-ak0.pinimg.com/474x/93/49/a3/9349a3e4bf4dada75c138d8e4c88894f.jpg",
       "avatar": "https://s-media-cache-ak0.pinimg.com/474x/cb/ac/0d/cbac0d21637d082abef830814709b7db.jpg",
       "items": [
@@ -105,6 +109,7 @@ class StreamListView extends React.Component {
     },
     {
       "name": 'theUserName',
+      "username": 'Nicola Bortignon',
       "picture": "https://s-media-cache-ak0.pinimg.com/474x/93/49/a3/9349a3e4bf4dada75c138d8e4c88894f.jpg",
       "avatar": "https://s-media-cache-ak0.pinimg.com/474x/cb/ac/0d/cbac0d21637d082abef830814709b7db.jpg",
       "items": [
@@ -117,42 +122,7 @@ class StreamListView extends React.Component {
     },
     {
       "name": 'theUserName',
-      "picture": "https://s-media-cache-ak0.pinimg.com/474x/93/49/a3/9349a3e4bf4dada75c138d8e4c88894f.jpg",
-      "avatar": "https://s-media-cache-ak0.pinimg.com/474x/cb/ac/0d/cbac0d21637d082abef830814709b7db.jpg",
-      "items": [
-        {
-          name: 'Shoes',
-          brandId: '1',
-          brandName: 'Adidas'
-        }
-      ]
-    },
-    {
-      "name": 'theUserName',
-      "picture": "https://s-media-cache-ak0.pinimg.com/474x/93/49/a3/9349a3e4bf4dada75c138d8e4c88894f.jpg",
-      "avatar": "https://s-media-cache-ak0.pinimg.com/474x/cb/ac/0d/cbac0d21637d082abef830814709b7db.jpg",
-      "items": [
-        {
-          name: 'Shoes',
-          brandId: '1',
-          brandName: 'Adidas'
-        }
-      ]
-    },
-    {
-      "name": 'theUserName',
-      "picture": "https://s-media-cache-ak0.pinimg.com/474x/93/49/a3/9349a3e4bf4dada75c138d8e4c88894f.jpg",
-      "avatar": "https://s-media-cache-ak0.pinimg.com/474x/cb/ac/0d/cbac0d21637d082abef830814709b7db.jpg",
-      "items": [
-        {
-          name: 'Shoes',
-          brandId: '1',
-          brandName: 'Adidas'
-        }
-      ]
-    },
-    {
-      "name": 'theUserName',
+      "username": 'Nicola Bortignon',
       "picture": "https://s-media-cache-ak0.pinimg.com/474x/93/49/a3/9349a3e4bf4dada75c138d8e4c88894f.jpg",
       "avatar": "https://s-media-cache-ak0.pinimg.com/474x/cb/ac/0d/cbac0d21637d082abef830814709b7db.jpg",
       "items": [
