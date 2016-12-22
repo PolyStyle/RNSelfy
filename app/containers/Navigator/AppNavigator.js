@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { View, Navigator, Platform, StatusBar } from 'react-native'
 import { SplashContainer, OnboardingContainer, FooterTabsContainer, SettingsContainer } from './../../containers'
 
-export default class ReactModoroNavigator extends Component {
+export default class AppNavigator extends Component {
   static propTypes = {
     isAuthed: PropTypes.bool.isRequired,
     isNew: PropTypes.bool.isRequired

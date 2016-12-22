@@ -16,7 +16,7 @@ import {
     Modal
 } from 'react-native';
 
-import { ReactModoroNavbar, Gear, Hamburger, Exit, OverlayProfile, Yay, Nan } from './../../components'
+import { Navbar, Gear, Hamburger, Exit, OverlayProfile, Yay, Nan } from './../../components'
 import clamp from 'clamp';
 
 var navigationBottomBar;
@@ -245,7 +245,7 @@ class SwipeCards extends Component {
                   <OverlayProfile />
                   <Exit style={styles.exitModal} onPress={this._closeProfile.bind(this)} />  
                </Modal>
-               <ReactModoroNavbar
+               <Navbar
                 title='Swipe'
                 leftButton={Platform.OS === 'android' ? <Hamburger onPress={this.props.openDrawer} /> : null}
                 rightButton={<Gear onPress={this.props.handleToSettings}/>} />

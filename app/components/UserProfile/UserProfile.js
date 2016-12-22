@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { View, StyleSheet, Text, Image, Dimensions, Platform } from 'react-native'
 import { LoginButton } from 'react-native-fbsdk'
 import { colors, fontSizes } from './../../styles'
-import { ReactModoroNavbar, Gear, Hamburger } from './../../components'
+import { Navbar, Gear, Hamburger } from './../../components'
 const { height } = Dimensions.get('window')
 
 UserProfile.propTypes = {
@@ -19,7 +19,7 @@ export default function UserProfile (props) {
         
      <Image style={styles.container} source={{uri:'https://s-media-cache-ak0.pinimg.com/564x/02/ba/b1/02bab1edd5d7a0c09f5d3ee1677581c0.jpg'}}  >
        
-      <ReactModoroNavbar
+      <Navbar
         title='Me'
         leftButton={Platform.OS === 'android' ? <Hamburger onPress={props.openDrawer} /> : null}
         rightButton={<Gear onPress={props.handleToSettings}/>} />

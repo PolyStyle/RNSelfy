@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity} from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Image, Dimensions, TouchableOpacity} from 'react-native';
 import { Gear, Hamburger, Heart, TagLabel, MoreDots} from './../../components'
 const { height,width } = Dimensions.get('window');
 
@@ -70,11 +70,10 @@ const styles = StyleSheet.create({
 
 
 
-class Item extends Component {
+class PostContainer extends Component {
   static propTypes = {
     onPress: PropTypes.func,
-    active: PropTypes.bool,
-    navigator: PropTypes.object
+    active: PropTypes.bool
   }
   constructor (props) {
     super(props)
@@ -105,18 +104,12 @@ class Item extends Component {
       this.props.onPress()
     } 
   }
-
-  _navigate(){
-  this.props.navigator.push({
-      name: 'Post',
-      passProps: this.props
-    })
-  }
-
   render(){
+    console.log('**')
+    console.log(this.props)
     return (
-      <View style={styles.container}>
-       <Image source={{uri:this.props.picture}} style={{ width: this.state.width, height: this.state.height }}>
+      <ScrollView style={styles.container}>
+       <Image source={{uri:this.props.picture }} style={{ width: this.state.width, height: this.state.height }}>
         <View style={styles.avatarContainer} >
           <Text style={styles.avatarName}> nicolabortignon </Text>
           <Image style={styles.avatar} source={{uri:this.props.avatar}} /> 
@@ -125,7 +118,7 @@ class Item extends Component {
        <View style={styles.descriptions}>
         <View style={styles.iconContainer}>
           <Heart style={styles.heartIcon} onPress={this.onPress.bind(this)}/>
-          <MoreDots style={styles.addIcon} onPress={this._navigate.bind(this)}/>
+          <MoreDots style={styles.addIcon} onPress={this.onPress.bind(this)}/>
         </View>
         <View style={styles.separationLine} />
         <Text style={styles.descriptionText}>This is a detail description of something long.</Text>
@@ -141,10 +134,10 @@ class Item extends Component {
           <TagLabel description="H&M" />
         </View>
        </View>
-      </View>
+      </ScrollView>
 
     )
   }
 }
 
-export default Item
+export default PostContainer

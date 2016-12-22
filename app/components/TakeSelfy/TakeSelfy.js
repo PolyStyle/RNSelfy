@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Image, Dimensions, Platform } from 'react-nativ
 
 import { connect } from 'react-redux'
 import { colors, fontSizes } from './../../styles'
-import { ReactModoroNavbar, Gear, Hamburger } from './../../components'
+import { Navbar, Gear, Hamburger } from './../../components'
 const { height } = Dimensions.get('window')
 const Button = require('apsl-react-native-button')
 const ImagePicker = require('react-native-image-picker')
@@ -101,7 +101,7 @@ class TakeSelfy extends Component {
   render () {
     return (
         <View style={styles.container}>
-          <ReactModoroNavbar
+          <Navbar
             title='Swipe'
             leftButton={Platform.OS === 'android' ? <Hamburger onPress={this.props.openDrawer} /> : null}
             rightButton={<Gear onPress={this.props.handleToSettings}/>} />

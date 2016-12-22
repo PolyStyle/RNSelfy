@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { View, StyleSheet, Text, Platform, ActivityIndicator, ListView, TouchableOpacity, Modal} from 'react-native'
-import { ReactModoroNavbar, Hamburger, Gear, Exit, OverlayProfile } from './../../components'
+import { Navbar, Hamburger, Gear, Exit, OverlayProfile } from './../../components'
 import { colors } from './../../styles'
 
 Leaderboard.propTypes = {
@@ -27,7 +27,7 @@ export default function Leaderboard (props) {
           <Exit onPress={props.closeModal} />  
        </Modal>
 
-      <ReactModoroNavbar
+      <Navbar
         leftButton={Platform.OS === 'android' ? <Hamburger onPress={props.openDrawer} /> : null}
         rightButton={<Gear onPress={props.handleToSettings} />} 
         title='Friends'/>

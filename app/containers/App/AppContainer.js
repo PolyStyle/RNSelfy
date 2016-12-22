@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import { View, Text, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
-import { ReactModoroNavigator } from './../../containers'
+import { AppNavigator } from './../../containers'
 import { PreSplash, FlashNotification } from './../../components'
 import { onAuthStateChanged } from './../../api/auth'
 import { onAuthChange, handleAuthRemotely } from './../../redux/modules/authentication'
@@ -39,7 +39,7 @@ class AppContainer extends Component {
         />
         {this.props.isAuthenticating === true
             ? <PreSplash />
-            : <ReactModoroNavigator isNew={this.props.isNew} isAuthed={this.props.isAuthed} />}
+            : <AppNavigator isNew={this.props.isNew} isAuthed={this.props.isAuthed} />}
         {this.props.showFlashNotification === true
           ? <FlashNotification
               permanent={this.props.flashNotificationIsPermanent}

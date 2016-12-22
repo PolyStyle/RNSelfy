@@ -1,6 +1,6 @@
 import React, {PropTypes, Component} from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, StatusBar, Switch, Image, Alert} from 'react-native'
-import { ReactModoroNavbar, Close } from './../../components'
+import { Navbar, Close } from './../../components'
 import { colors, fontSizes } from './../../styles'
 import Slider from 'react-native-slider' 
 import { connect } from 'react-redux'
@@ -34,7 +34,7 @@ class Settings extends Component {
     return (
  
     <View style={styles.container}>
-      <ReactModoroNavbar
+      <Navbar
         title='Settings'
         leftButton={<Close onPress={this.props.onBack}/>} />
  

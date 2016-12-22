@@ -1,8 +1,9 @@
 import React, { PropTypes, Component } from 'react'
-import { StyleSheet, Text, View ,Dimensions, Platform } from 'react-native'
+import { StyleSheet, Text, View ,Dimensions, Platform, Navigator } from 'react-native'
 import { connect } from 'react-redux'
-import { ReactModoroNavbar, StreamListView , CustomButton, Gear}  from './../../components'
+import { Navbar, StreamListView , CustomButton, Gear}  from './../../components'
 import { userOnboarded } from './../../redux/modules/users'
+import { PostContainer } from  './../../containers'
 const { height,width } = Dimensions.get('window')
 
 class StreamContainer extends Component {
@@ -35,13 +36,32 @@ class StreamContainer extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <ReactModoroNavbar
-                title='Stream' 
-        />
-        <View style={styles.categoriesList}>
-          <StreamListView handlerSelection={this.handlerSelection.bind(this)}/>
+        <Navigator
+          initialRoute={{ name: 'Stream', index: 0 }}
+          renderScene={(route, navigator) => {
+            if(route.name == 'Stream'){
+              return (
+                <View>
+                <Navbar title='Stream' />
+                <View style={styles.categoriesList}>
+                <StreamListView navigator={navigator}  handlerSelection={this.handlerSelection.bind(this)}/>
+                </View>
+                </View>
+                )
+            }
+            if(route.name == 'Post'){
+              return (
+                <View>
+                <Navbar title='Post' />
+                  <View style={styles.categoriesList}>
+                  <PostContainer {...route.passProps} />
+                  </View>
+                </View>
+              )
+            }
+          }}
+           />
         </View>
-    </View>
     )
   }
 }

@@ -12,7 +12,7 @@ import
     Dimensions,
     TouchableHighlight
 } from 'react-native'
-import { ReactModoroNavbar, Gear, Hamburger } from './../../components'
+import { Navbar, Gear, Hamburger } from './../../components'
 import { colors } from './../../styles'
 import SwipeCards from './SwipeCards';
 

@@ -103,7 +103,7 @@ class StreamListView extends React.Component {
         }
       ]
     }
-    
+
     
       ];
     const getSectionData = (dataBlob, sectionId) => dataBlob[sectionId];
@@ -127,13 +127,14 @@ class StreamListView extends React.Component {
     //this.props.handlerSelection(id,active);
   }
 
+
   render() {
     return (
-      <ListView
+      <ListView 
         removeClippedSubviews={true} 
         style={styles.container}
         dataSource={this.state.dataSource}
-        renderRow={(data) => <Item {...data} active={false} onPress={this.handlerSelection.bind(this)} />}
+        renderRow={(data) => <Item navigator={this.props.navigator} {...data} active={false} onPress={this.handlerSelection.bind(this)} />}
       />
     );
   }
