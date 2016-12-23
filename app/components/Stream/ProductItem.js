@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
 
 
 
-class Item extends Component {
+class ProductItem extends Component {
   static propTypes = {
     onPress: PropTypes.func,
     active: PropTypes.bool,
@@ -141,12 +141,6 @@ class Item extends Component {
         <TouchableHighlight onPress={this._navigateToPost.bind(this)}>
           <Image onPress={this._navigateToPost.bind(this)} source={{uri:this.props.picture}} style={{ width: this.state.width, height: this.state.height }} />
         </TouchableHighlight>
-        <TouchableHighlight style={styles.avatarContainer} onPress={this._navigateToUser.bind(this)}>
-        <View style={styles.avatarContainer} >
-            <Text style={styles.avatarName}> {this.props.username} </Text>
-            <Image style={styles.avatar} source={{uri:this.props.avatar}} /> 
-        </View>
-        </TouchableHighlight>
        <View style={styles.descriptions}>
         <View style={styles.iconContainer}>
           <Heart active={this.state.active} style={styles.heartIcon} onPress={this.onPress.bind(this)}/>
@@ -172,4 +166,4 @@ class Item extends Component {
   }
 }
 
-export default Item
+export default ProductItem

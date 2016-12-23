@@ -27,19 +27,11 @@ class TagLabel extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {
-      active: props.active,
-    }
   };
 
   onPress() {
-    const newState = !this.state.active;
-     this.setState({
-          active: newState
-        });
- 
     if(this.props.onPress) {
-      this.props.onPress(this.props.email,newState)
+      this.props.onPress()
     } 
   }
 

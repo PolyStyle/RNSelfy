@@ -115,7 +115,7 @@ class PostContainer extends Component {
         brandPicture: 'https://s-media-cache-ak0.pinimg.com/474x/e3/dc/15/e3dc15d1211ea0c80d73aaa463c8f5aa.jpg',
       },
       {
-        itemPicture: 'https://s-media-cache-ak0.pinimg.com/474x/6d/2e/49/6d2e49eec250e58e00db6527ac1913b6.jpg', 
+        itemPicture: 'https://images.solecollector.com/complex/image/upload/tjdabf6iwrxjcxvofqm0.jpg', 
         brandPicture: 'https://s-media-cache-ak0.pinimg.com/474x/79/e2/06/79e2068640f510a47c3289b6b049619f.jpg',
       },
       {
@@ -168,19 +168,36 @@ class PostContainer extends Component {
  
   }
 
-  onPress = () =>{ 
+ onPress = () =>{ 
+    const newState = !this.state.active;
+    this.setState({
+          active: newState
+        }, function(){
     if(this.props.onPress) {
       this.props.onPress()
     } 
+    });
   }
+
+  _navigateToProduct(rowData){
+    console.log(rowData);
+  this.props.navigator.push({
+      name: 'Product',
+      title: 'Product',
+      passProps: rowData,
+    })
+  }
+
   render(){ 
     return (
       <ScrollView style={styles.container}>
-       <Image shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true} source={{uri:this.props.picture }} style={{ width: this.props.width, height: this.props.height }}>
-       </Image>
+       <TouchableOpacity onPress={this.onPress.bind(this)}> 
+        <Image shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true} source={{uri:this.props.picture }} style={{ width: this.props.width, height: this.props.height }}>
+        </Image>
+       </TouchableOpacity>
        <View style={styles.descriptions}>
         <View style={styles.iconContainer}>
-          <Heart active={this.props.active} style={styles.heartIcon} onPress={this.onPress.bind(this)}/>
+          <Heart active={this.state.active} style={styles.heartIcon} onPress={this.onPress.bind(this)}/>
           <MoreDots style={styles.addIcon} onPress={this.onPress.bind(this)}/>
         </View>
         <View style={styles.separationLine} />
@@ -205,7 +222,7 @@ class PostContainer extends Component {
             style={styles.productHolder}
             dataSource={this.state.dataSource}
             renderRow={(rowData) => <View>
-                <TouchableOpacity style={styles.productItem} onPress={this._navigateToPost.bind(this)}> 
+                <TouchableOpacity style={styles.productItem} onPress={this._navigateToProduct.bind(this,rowData)}> 
                   <Image style={styles.roundedProduct} source={{uri:rowData.itemPicture }} />
                   <Image style={styles.roundedBrand} source={{uri:rowData.brandPicture }} />
                 </TouchableOpacity>
@@ -220,7 +237,7 @@ class PostContainer extends Component {
              showsHorizontalScrollIndicator={false}
             dataSource={this.state.dataSource2}
             renderRow={(rowData) => <View>
-                <TouchableOpacity style={styles.productItem} onPress={this._navigateToPost.bind(this)}> 
+                <TouchableOpacity style={styles.productItem} onPress={this._navigateToProduct.bind(this,rowData)}> 
                   <Image style={styles.roundedProduct} source={{uri:rowData.itemPicture }} />
                   <Image style={styles.roundedBrand} source={{uri:rowData.brandPicture }} />
                 </TouchableOpacity>

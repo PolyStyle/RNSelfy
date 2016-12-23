@@ -3,7 +3,7 @@ import { TouchableHighlight, StyleSheet, Text, View ,Dimensions, Platform, Navig
 import { connect } from 'react-redux'
 import { Navbar, StreamListView , CustomButton, Gear}  from './../../components'
 import { userOnboarded } from './../../redux/modules/users'
-import { PostContainer, UserProfileContainer, ProductContainer} from  './../../containers'
+import { PostContainer, UserProfileContainer, ProductContainer, BrandContainer} from  './../../containers'
 const { height,width } = Dimensions.get('window')
 
 class StreamContainer extends Component {
@@ -98,6 +98,13 @@ class StreamContainer extends Component {
               return (
                 <View style={styles.categoriesList}>
                   <ProductContainer {...route.passProps} {...route.passState} />
+                </View>
+              )
+            }
+            if(route.name == 'Brand'){
+              return (
+                <View style={styles.categoriesList}>
+                  <BrandContainer {...route.passProps} {...route.passState} />
                 </View>
               )
             }
