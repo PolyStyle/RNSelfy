@@ -227,7 +227,6 @@ class ProductContainer extends Component {
                 <Image style={styles.roundedProduct} source={{uri:rowData.itemPicture }} />
               </View>
               </TouchableOpacity>
-
             }
           />
         </View>
@@ -237,7 +236,7 @@ class ProductContainer extends Component {
           <MoreDots style={styles.addIcon} onPress={this.onPress.bind(this)}/>
         </View>
         <View style={styles.separationLine} />
-        <Text style={styles.descriptionText}>Posted by: {this.props.name} </Text>
+        <Text style={styles.descriptionText}>By: {this.props.name} </Text>
         <Text style={styles.descriptionText}>This is a detail description of something long.</Text>
         <View style={styles.tagList}>
           <Text style={styles.tagTitle}>Tags: </Text>
@@ -245,14 +244,7 @@ class ProductContainer extends Component {
           <TagLabel description="Daily Fashion" />
           <TagLabel description="Trendy" />
         </View>
-        <View style={styles.tagList}>
-          <Text style={styles.tagTitle}>Brands: </Text>
-          <TagLabel description="Adidas" />
-          <TagLabel description="H&M" />
-        </View>
         <View style={styles.separationLine} />
-        <View style={styles.separationLine} />
-        
        </View>
       </ScrollView>
 

@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { View, ListView, StyleSheet, Text, Dimensions, Image } from 'react-native';
-import { ProductItem }  from './../../components'
+import { View, ListView, StyleSheet, Text, Dimensions, Image , TouchableOpacity} from 'react-native';
+import { ProductItem, FilterLabel }  from './../../components'
 const { height,width } = Dimensions.get('window')
 
 
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   containerHeader: {
     width: width,
     backgroundColor: "#ffffff",
-    height: 350
+    height: 290
   },
   avatar: {
     flexDirection: 'row', 
@@ -48,6 +48,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  sectionHeaderContainer: {
+        flexDirection: 'row',
+    padding: 5,
+    paddingTop: 20,
+    paddingBottom: 20,
+    borderBottomWidth: 1,
+    backgroundColor: '#ffffff',
+    borderColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+ 
+  sectionHeaderNameText: {
+    paddingLeft: 10,
+    fontWeight: "700",
+    fontSize: 12,
+    color: '#333',
   },
 });
 
@@ -134,7 +152,43 @@ class BrandContainer extends React.Component {
         }
       ]
     },
- 
+        {
+      "name": 'theUserName',
+      "username": 'Nicola Bortignon',
+      "picture": "https://s-media-cache-ak0.pinimg.com/474x/18/c5/59/18c559851cce56c254d6c7ff19a12d1e.jpg",
+      "avatar": "https://s-media-cache-ak0.pinimg.com/564x/68/2d/4c/682d4c97619c67a56da0f1a7227f1352.jpg",
+      "items": [
+        {
+          name: 'Shoes',
+          brandId: '1',
+          brandName: 'Adidas'
+        }
+      ]
+    },    {
+      "name": 'theUserName',
+      "username": 'Nicola Bortignon',
+      "picture": "https://s-media-cache-ak0.pinimg.com/474x/18/c5/59/18c559851cce56c254d6c7ff19a12d1e.jpg",
+      "avatar": "https://s-media-cache-ak0.pinimg.com/564x/68/2d/4c/682d4c97619c67a56da0f1a7227f1352.jpg",
+      "items": [
+        {
+          name: 'Shoes',
+          brandId: '1',
+          brandName: 'Adidas'
+        }
+      ]
+    },    {
+      "name": 'theUserName',
+      "username": 'Nicola Bortignon',
+      "picture": "https://s-media-cache-ak0.pinimg.com/474x/18/c5/59/18c559851cce56c254d6c7ff19a12d1e.jpg",
+      "avatar": "https://s-media-cache-ak0.pinimg.com/564x/68/2d/4c/682d4c97619c67a56da0f1a7227f1352.jpg",
+      "items": [
+        {
+          name: 'Shoes',
+          brandId: '1',
+          brandName: 'Adidas'
+        }
+      ]
+    },
 
     
       ];
@@ -174,20 +228,41 @@ class BrandContainer extends React.Component {
   }
 
   _renderSectionHeader(){
-    return (<View><Text> Section Header </Text></View>)
+    return ( 
+    <View style={styles.sectionHeaderContainer}>
+           <ListView horizontal={true}
+          showsHorizontalScrollIndicator={false}
+            style={styles.productHolder}
+            dataSource={this.state.dataSource}
+            renderRow={(rowData) => <View>
+                <TouchableOpacity> 
+                  <FilterLabel description="Accessories" />
+                </TouchableOpacity>
+              </View>}
+          />
+    </View>)
   }
 
+
+  _navigateToProduct(rowData){
+    console.log('NAVIGATE TO PRODUCT');
+      this.props.navigator.push({
+          name: 'Product',
+          title: 'Product',
+          passProps: rowData,
+        })
+      }
 
   render() {
     return ( 
         <ListView 
           renderHeader={this._renderHeader}
-          //renderSectionHeader={this._renderSectionHeader} 
+          renderSectionHeader={this._renderSectionHeader.bind(this)} 
           initialListSize ={2}
           removeClippedSubviews={true} 
           style={styles.container}
           dataSource={this.state.dataSource}
-          renderRow={(data) => <ProductItem navigator={this.props.navigator} {...data} active={false} onPress={this.handlerSelection.bind(this)} />}
+          renderRow={(data) => <ProductItem navigator={this.props.navigator} {...data} active={false}  />}
         /> 
     );
   }

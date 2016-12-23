@@ -5,6 +5,7 @@ const { height,width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#00ffcc'
   },
   descriptions: {
     backgroundColor: '#ffffff',
@@ -129,7 +130,16 @@ class ProductItem extends Component {
   this.props.navigator.push({
       name: 'Brand',
       title: 'Brand name',
-      passProps: this.props,
+      passProps: {...this.props, itemPicture: this.props.picture},
+      passState: this.state
+    })
+  }
+
+  _navigateToProduct(){
+  this.props.navigator.push({
+      name: 'Product',
+      title: 'Product Name',
+      passProps: {...this.props, itemPicture: this.props.picture},
       passState: this.state
     })
   }
@@ -138,7 +148,7 @@ class ProductItem extends Component {
   render(){
     return (
       <View  shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true} style={styles.container}>
-        <TouchableHighlight onPress={this._navigateToPost.bind(this)}>
+        <TouchableHighlight onPress={this._navigateToProduct.bind(this)}>
           <Image onPress={this._navigateToPost.bind(this)} source={{uri:this.props.picture}} style={{ width: this.state.width, height: this.state.height }} />
         </TouchableHighlight>
        <View style={styles.descriptions}>
@@ -148,17 +158,6 @@ class ProductItem extends Component {
         </View>
         <View style={styles.separationLine} />
         <Text style={styles.descriptionText}>This is a detail description of something long.</Text>
-        <View style={styles.tagList}>
-          <Text style={styles.tagTitle}>Tags: </Text>
-          <TagLabel description="Black & White" />
-          <TagLabel description="Daily Fashion" />
-          <TagLabel description="Trendy" />
-        </View>
-        <View style={styles.tagList}>
-          <Text style={styles.tagTitle}>Brands: </Text>
-          <TagLabel onPress={this._navigateToBrand.bind(this)}  description="Adidas" />
-          <TagLabel onPress={this._navigateToBrand.bind(this)}  description="H&M" />
-        </View>
        </View>
       </View>
 

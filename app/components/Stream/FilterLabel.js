@@ -5,6 +5,8 @@ const styles = StyleSheet.create({
   labelContainer: {
     borderRadius: 5,
     backgroundColor: '#333333',
+    marginLeft: 2,
+    padding: 3,
     marginRight: 2,
   },
   touchArea: {
@@ -12,13 +14,13 @@ const styles = StyleSheet.create({
   },
   labelText: {
     color: "#ffffff", 
-    fontSize: 12
+    fontSize: 14
   }
 
 });
 
 
-class TagLabel extends Component {
+class FilterLabel extends Component {
   static propTypes = {
     description: PropTypes.string.isRequired,
     onPress: PropTypes.func,
@@ -46,4 +48,4 @@ class TagLabel extends Component {
 
 }
 
-export default TagLabel
+export default FilterLabel
