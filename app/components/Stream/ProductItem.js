@@ -144,6 +144,15 @@ class ProductItem extends Component {
     })
   }
 
+  _navigateToCollection(){
+  this.props.navigator.push({
+      name: 'Collection',
+      title: 'Black & White',
+      passProps: this.props,
+      passState: this.state
+    })
+  }
+
 
   render(){
     return (
@@ -157,7 +166,7 @@ class ProductItem extends Component {
           <MoreDots style={styles.addIcon} />
         </View>
         <View style={styles.separationLine} />
-        <Text style={styles.descriptionText}>This is a detail description of something long.</Text>
+        <Text style={styles.descriptionText}>This is a detail description of something long.</Text>   
        </View>
       </View>
 

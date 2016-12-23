@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { View, ListView, StyleSheet, Text } from 'react-native';
-import Item from './Item';
+import { Item }  from './../../components'
 
 
 const styles = StyleSheet.create({
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class StreamListView extends React.Component {
+class CollectionContainer extends React.Component {
 
   formatData(data) {
     // We're sorting by alphabetically so we need the alphabet
@@ -153,6 +153,7 @@ class StreamListView extends React.Component {
   }
 
   handlerSelection(id,active){
+    console.log('bubble up')
     //this.props.handlerSelection(id,active);
   }
 
@@ -170,4 +171,4 @@ class StreamListView extends React.Component {
   }
 }
 
-export default StreamListView;
+export default CollectionContainer;

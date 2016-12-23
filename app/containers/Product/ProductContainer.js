@@ -104,14 +104,11 @@ class ProductContainer extends Component {
     onPress: PropTypes.func
   }
   constructor (props) {
-    super(props) 
-    console.log('proooooppss:', this.props)
+    super(props)
     this.state = {
       width: width,
       
-    }
-  
-    console.log(this.state.currentImage)
+    } 
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
     const ds2 = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -186,16 +183,18 @@ class ProductContainer extends Component {
 
   componentDidMount() {
     // Set a ratio. We should allow picture with the height between 1/2 and 3/2 of the width
-    Image.getSize(this.props.itemPicture, (srcWidth, srcHeight) => {
-      const maxHeight = Dimensions.get('window').height; // or something else
-      const maxWidth = Dimensions.get('window').width;
-      const imageRatio = srcWidth/srcHeight;
-      this.setState({
-      currentImage: this.props.itemPicture,
-       width: width, height: width/imageRatio });
-    }, error => {
-      console.log('error:', error);
-    });
+    // TODO: too time consuming, needs to be refactored.
+       Image.getSize(this.props.itemPicture, (srcWidth, srcHeight) => {
+        const maxHeight = Dimensions.get('window').height; // or something else
+        const maxWidth = Dimensions.get('window').width;
+        const imageRatio = srcWidth/srcHeight;
+        this.setState({
+        currentImage: this.props.itemPicture,
+         width: width, height: width/imageRatio });
+      }, error => {
+        console.log('error:', error);
+      });
+     
   }
 
 
@@ -205,11 +204,20 @@ class ProductContainer extends Component {
     } 
   }
   _selectProduct(rowData){
-    console.log(rowData.itemPicture)
     this.setState({
       currentImage: rowData.itemPicture
     })
   }
+
+  _navigateToCollection(){
+  this.props.navigator.push({
+      name: 'Collection',
+      title: 'Black & White',
+      passProps: this.props,
+      passState: this.state
+    })
+  }
+
 
   render(){ 
     return (
@@ -240,9 +248,9 @@ class ProductContainer extends Component {
         <Text style={styles.descriptionText}>This is a detail description of something long.</Text>
         <View style={styles.tagList}>
           <Text style={styles.tagTitle}>Tags: </Text>
-          <TagLabel description="Black & White" />
-          <TagLabel description="Daily Fashion" />
-          <TagLabel description="Trendy" />
+          <TagLabel onPress={this._navigateToCollection.bind(this)} description="Sneakers" />
+          <TagLabel onPress={this._navigateToCollection.bind(this)} description="Daily Fashion" />
+          <TagLabel onPress={this._navigateToCollection.bind(this)} description="Trendy" />
         </View>
         <View style={styles.separationLine} />
        </View>

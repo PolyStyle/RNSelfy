@@ -85,6 +85,7 @@ class Item extends Component {
   }
   componentDidMount() {
     // Set a ratio. We should allow picture with the height between 1/2 and 3/2 of the width
+    // TODO THIS IS TOOO TIME CONSUMING. 
     Image.getSize(this.props.picture, (srcWidth, srcHeight) => {
       const maxHeight = Dimensions.get('window').height; // or something else
       const maxWidth = Dimensions.get('window').width;
@@ -134,6 +135,16 @@ class Item extends Component {
     })
   }
 
+  _navigateToCollection(){
+  this.props.navigator.push({
+      name: 'Collection',
+      title: 'Black & White',
+      passProps: this.props,
+      passState: this.state
+    })
+  }
+
+
 
   render(){
     return (
@@ -150,15 +161,15 @@ class Item extends Component {
        <View style={styles.descriptions}>
         <View style={styles.iconContainer}>
           <Heart active={this.state.active} style={styles.heartIcon} onPress={this.onPress.bind(this)}/>
-          <MoreDots style={styles.addIcon} />
+          <MoreDots style={styles.addIcon} onPress={this.onPress.bind(this)}/>
         </View>
         <View style={styles.separationLine} />
         <Text style={styles.descriptionText}>This is a detail description of something long.</Text>
         <View style={styles.tagList}>
           <Text style={styles.tagTitle}>Tags: </Text>
-          <TagLabel description="Black & White" />
-          <TagLabel description="Daily Fashion" />
-          <TagLabel description="Trendy" />
+          <TagLabel onPress={this._navigateToCollection.bind(this)} description="Black & White" />
+          <TagLabel onPress={this._navigateToCollection.bind(this)} description="Daily Fashion" />
+          <TagLabel onPress={this._navigateToCollection.bind(this)} description="Trendy" />
         </View>
         <View style={styles.tagList}>
           <Text style={styles.tagTitle}>Brands: </Text>

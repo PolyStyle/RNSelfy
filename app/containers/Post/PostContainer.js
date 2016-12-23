@@ -180,13 +180,22 @@ class PostContainer extends Component {
   }
 
   _navigateToProduct(rowData){
-    console.log(rowData);
   this.props.navigator.push({
       name: 'Product',
       title: 'Product',
       passProps: rowData,
     })
   }
+
+  _navigateToCollection(){
+  this.props.navigator.push({
+      name: 'Collection',
+      title: 'Black & White',
+      passProps: this.props,
+      passState: this.state
+    })
+  }
+
 
   render(){ 
     return (
@@ -205,9 +214,9 @@ class PostContainer extends Component {
         <Text style={styles.descriptionText}>This is a detail description of something long.</Text>
         <View style={styles.tagList}>
           <Text style={styles.tagTitle}>Tags: </Text>
-          <TagLabel description="Black & White" />
-          <TagLabel description="Daily Fashion" />
-          <TagLabel description="Trendy" />
+          <TagLabel onPress={this._navigateToCollection.bind(this)} description="Black & White" />
+          <TagLabel onPress={this._navigateToCollection.bind(this)} description="Daily Fashion" />
+          <TagLabel onPress={this._navigateToCollection.bind(this)} description="Trendy" />
         </View>
         <View style={styles.tagList}>
           <Text style={styles.tagTitle}>Brands: </Text>

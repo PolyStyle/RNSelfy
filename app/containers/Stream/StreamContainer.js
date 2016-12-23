@@ -3,7 +3,7 @@ import { TouchableHighlight, StyleSheet, Text, View ,Dimensions, Platform, Navig
 import { connect } from 'react-redux'
 import { Navbar, StreamListView , CustomButton, Gear}  from './../../components'
 import { userOnboarded } from './../../redux/modules/users'
-import { PostContainer, UserProfileContainer, ProductContainer, BrandContainer} from  './../../containers'
+import { PostContainer, UserProfileContainer, ProductContainer, BrandContainer, CollectionContainer} from  './../../containers'
 const { height,width } = Dimensions.get('window')
 
 class StreamContainer extends Component {
@@ -76,35 +76,42 @@ class StreamContainer extends Component {
             if(route.name == 'Stream'){
               return (  
                 <View style={styles.categoriesList}>
-                <StreamListView navigator={navigator}  handlerSelection={this.handlerSelection.bind(this)}/>
+                  <StreamListView navigator={navigator}  handlerSelection={this.handlerSelection.bind(this)}/>
                 </View>
                 )
             }
             if(route.name == 'Post'){
               return (
                 <View style={styles.categoriesList}>
-                  <PostContainer {...route.passProps} {...route.passState} />
+                  <PostContainer navigator={navigator} {...route.passProps} {...route.passState} />
                 </View>
               )
             }
             if(route.name == 'User'){
               return (
                 <View style={styles.categoriesList}>
-                  <UserProfileContainer {...route.passProps} {...route.passState} />
+                  <UserProfileContainer navigator={navigator} {...route.passProps} {...route.passState} />
                 </View>
               )
             }
             if(route.name == 'Product'){
               return (
                 <View style={styles.categoriesList}>
-                  <ProductContainer {...route.passProps} {...route.passState} />
+                  <ProductContainer  navigator={navigator} {...route.passProps} {...route.passState} />
                 </View>
               )
             }
             if(route.name == 'Brand'){
               return (
                 <View style={styles.categoriesList}>
-                  <BrandContainer {...route.passProps} {...route.passState} />
+                  <BrandContainer navigator={navigator} {...route.passProps} {...route.passState} />
+                </View>
+              )
+            }
+            if(route.name == 'Collection'){
+              return (
+                <View style={styles.categoriesList}>
+                  <CollectionContainer navigator={navigator} {...route.passProps} {...route.passState} />
                 </View>
               )
             }

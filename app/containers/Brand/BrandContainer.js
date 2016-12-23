@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { View, ListView, StyleSheet, Text, Dimensions, Image , TouchableOpacity} from 'react-native';
+import { View, ListView, StyleSheet, Text, Dimensions, Image, TouchableOpacity} from 'react-native';
 import { ProductItem, FilterLabel }  from './../../components'
 const { height,width } = Dimensions.get('window')
 
@@ -231,8 +231,7 @@ class BrandContainer extends React.Component {
     return ( 
     <View style={styles.sectionHeaderContainer}>
            <ListView horizontal={true}
-          showsHorizontalScrollIndicator={false}
-            style={styles.productHolder}
+            showsHorizontalScrollIndicator={false}
             dataSource={this.state.dataSource}
             renderRow={(rowData) => <View>
                 <TouchableOpacity> 

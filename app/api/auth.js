@@ -13,17 +13,11 @@ export function getAccessToken () {
 // TODO: rewrite this pseudo subscriber-topic pattern. 
 // Was part of the initial boilerplate but doesn't make much sense anymore
 export function onAuthStateChanged(callback) { 
-  console.log('Registering a new callback on Auth State changed' , callback);
   onAuthStateChangedCallbacks.push(callback);
 }
 
 export function authWithToken (accessToken) {
-  console.log('trying to access with token ')
-
-  console.log(accessToken);
-
   selfie = new Selfie({facebookToken: accessToken});
-
   return selfie.profile().then(function(profile){
       // allign profile to user
       // call onAuthStateChange
