@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import { ScrollView, View, Text, StyleSheet, Image, Dimensions, TouchableOpacity, InteractionManager, ListView} from 'react-native';
-import { Gear, Hamburger, Heart, TagLabel, MoreDots, Item} from './../../components'
+import { Gear, Hamburger, Heart, TagLabel, MoreDots, Item, FollowButton} from './../../components'
 const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -69,17 +69,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  followUser: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
   productHolder: { 
-    flexDirection: 'column',
-    backgroundColor: '#ff0022',
+    flexDirection: 'row',
     width: width,
-    height: 90,
-    flex: 1,
+    height: 115,
+
   },
   roundedProduct: { 
-    width: 90,
-    height: 90,
-    borderRadius: 45,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
   },
   roundedBrand: { 
     width: 40,
@@ -89,11 +93,19 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0
   },
+  productViewItem: {
+    width: 110,
+    height: 130,
+    marginRight: 5, 
+    alignItems: 'center',
+  },
+  productText: {
+    fontSize: 10,
+    color: '#666666'
+  },
   productItem: {
-    backgroundColor: '#00ffcc',
-    width: 90,
-    height: 90,
-    marginRight: 10, 
+    width: 110,
+    height: 110,
   },
   backgroundHeader: {
     width: width,
@@ -102,15 +114,14 @@ const styles = StyleSheet.create({
   sectionHeaderContainer: {
     flexDirection: 'row',
     padding: 5,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
     borderBottomWidth: 1,
     backgroundColor: '#ffffff',
     borderColor: '#ccc',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
- 
 });
 
 
@@ -279,7 +290,10 @@ class UserProfileContainer extends Component {
   _renderHeader(){
    return ( 
     <Image style={styles.backgroundHeader} shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true} source={{uri:'https://s-media-cache-ak0.pinimg.com/474x/11/bc/0f/11bc0f45fb59d504151d6cd7f8d4c3ce.jpg'}} >
-       <View style={styles.avatarContainer} >
+      <View style={styles.followUser}>
+      <FollowButton  cta={"Follow"} active={false} />
+      </View>
+      <View style={styles.avatarContainer} >
       <Image style={styles.avatar} source={{uri: this.props.avatar}} /> 
       </View>
     </Image>
@@ -295,9 +309,10 @@ class UserProfileContainer extends Component {
             showsHorizontalScrollIndicator={false}
             dataSource={this.state.dataSource}
             renderRow={(rowData) => 
-              <TouchableOpacity style={styles.productItem}  > 
-              <View style={styles.productItem}>
+              <TouchableOpacity style={styles.productViewItem}  > 
+              <View style={styles.productViewItem}>
                 <Image style={styles.roundedProduct} source={{uri:'https://s-media-cache-ak0.pinimg.com/564x/2b/ec/48/2bec48e780adf4de0139984ff956c2b6.jpg' }} />
+                <Text style={styles.productText}> Last Week Likes </Text>
               </View>
               </TouchableOpacity>
             }
