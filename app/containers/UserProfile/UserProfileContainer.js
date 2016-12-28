@@ -287,16 +287,25 @@ class UserProfileContainer extends Component {
     } 
   }
 
+  handleFollowing(){
+    var isFollowing = this.state.isFollowing;
+    isFollowing = !isFollowing;
+    this.setState({
+      isFollowing: isFollowing
+    })
+  }
+
   _renderHeader(){
    return ( 
     <Image style={styles.backgroundHeader} shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true} source={{uri:'https://s-media-cache-ak0.pinimg.com/474x/11/bc/0f/11bc0f45fb59d504151d6cd7f8d4c3ce.jpg'}} >
-      <View style={styles.followUser}>
-      <FollowButton  cta={"Follow"} active={false} />
-      </View>
       <View style={styles.avatarContainer} >
       <Image style={styles.avatar} source={{uri: this.props.avatar}} /> 
       </View>
+            <View style={styles.followUser}>
+      <FollowButton  cta={"Following"} active={this.state.isFollowing} onPress={this.handleFollowing.bind(this)} />
+      </View>
     </Image>
+
     )
   }
 
@@ -305,6 +314,7 @@ class UserProfileContainer extends Component {
     <View style={styles.sectionHeaderContainer}>
           <ListView horizontal={true}
             style={styles.productHolder}
+            removeClippedSubviews={false}
             initialListSize ={10}
             showsHorizontalScrollIndicator={false}
             dataSource={this.state.dataSource}
@@ -326,8 +336,6 @@ class UserProfileContainer extends Component {
         <ListView 
           renderHeader={this._renderHeader.bind(this)}
           renderSectionHeader={this._renderSectionHeader.bind(this)} 
-          initialListSize ={10}
-          removeClippedSubviews={true} 
           style={styles.container}
           dataSource={this.state.dataSource}
           renderRow={(data) => <Item navigator={this.props.navigator} {...data} active={false}  />}

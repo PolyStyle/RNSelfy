@@ -15,15 +15,13 @@ export function addUser(id, user) {
 }
 
 
-function updateFriends(friends){
-  console.log('FRIENDS', friends);
+function updateFriends(friends){ 
   return {
     type: UPDATE_FRIENDS,
     friends
   }
 }
-function updateSubscribing(subscribing){
-  console.log('SUBSCRIBING', subscribing);
+function updateSubscribing(subscribing){ 
   return {
     type: UPDATE_SUBSCRIBING,
     subscribing
@@ -33,19 +31,16 @@ function updateSubscribing(subscribing){
 export function friends(){
   return  function (dispatch) { 
     return getFriends()
-      .then(function(friends){
-        console.log('GOT friends REQUEST' + friends);
+      .then(function(friends){ 
         dispatch(updateFriends(friends));
       })
   }
 }
 
 export function subscribing(){
-  return function (dispatch) { 
-    console.log('HANDLE CALLED')
+  return function (dispatch) {  
     return getSubscribing()
-      .then(function(subscribing){
-        console.log('GOT SUBSCRIBING REQUEST' + subscribing);
+      .then(function(subscribing){ 
         dispatch(updateSubscribing(subscribing));
       })
   }

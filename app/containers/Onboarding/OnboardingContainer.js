@@ -22,6 +22,7 @@ class OnboardingContainer extends Component {
     console.log(newCounter);
   }
 
+
   constructor (props) {
     super(props)
     this.state = {

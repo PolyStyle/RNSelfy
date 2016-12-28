@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -9,53 +9,62 @@ const styles = StyleSheet.create({
   },
   active: {
     borderRadius: 3, 
-    paddingLeft: 12,
-    paddingRight: 12,
-    paddingTop: 8,
-    paddingBottom: 8,
+    paddingLeft: 5,
+    paddingRight: 5,
+    paddingTop: 3,
+    paddingBottom: 3,
     borderRadius: 3,
-    borderColor: '#333333',
+    borderColor: '#dfdfdf',
     borderWidth: 1,
-    backgroundColor: '#333333',
-
+    backgroundColor: '#111111',
   },
   disable:{
     borderRadius: 3, 
-    paddingLeft: 12,
-    paddingRight: 12,
-    paddingTop: 8,
-    paddingBottom: 8,
+    paddingLeft: 5,
+    paddingRight: 5,
+    paddingTop: 3,
+    paddingBottom: 3,
     borderRadius: 3,
     borderColor: '#555555',
     borderWidth: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#111111',
   },
   activeText: {
-    color: '#ffffff',
+    fontSize: 10,
+    color: '#dfdfdf',
   },
   disableText: {
+    fontSize: 10,
     color: '#555555'
   }
 });
 
-FollowButton.propTypes = {
-  onPress: PropTypes.func,
-  cta: PropTypes.string,
-  active: PropTypes.bool
-}
+ 
 
-FollowButton.defaultProps = {
-  active: true,
-}
+class FollowButton extends Component {
+  static propTypes = {
+    cta: PropTypes.string,
+   active: PropTypes.bool
+  };
 
-export default function FollowButton (props) {
-  return (
-    <TouchableOpacity onPress={props.onPress} style={props.active ? styles.active : styles.disable}  >
-         <Icon
-        name='ios-close'
-        size={props.size}
-        color={'#6b6490'} />
-        <Text style={props.active ? styles.activeText : styles.disableText}> {props.cta || 'Buttom to Click'} </Text>
+  constructor (props) {
+    super(props)
+  };
+
+  onPress() {
+    if(this.props.onPress) {
+      this.props.onPress()
+    } 
+  }
+
+   render(){
+
+    return (
+    <TouchableOpacity onPress={this.onPress.bind(this)} style={this.props.active ? styles.active : styles.disable}  >
+        <Text style={this.props.active ? styles.activeText : styles.disableText}> {this.props.active ? 'Following' : 'Follow'} </Text>
     </TouchableOpacity>
-  )
+    )
+  }
 }
+
+export default FollowButton

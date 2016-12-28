@@ -53,7 +53,7 @@ class AppContainer extends Component {
 }
 
 function mapStateToProps ({authentication, flashNotification, users}) {
-  console.log('map state to props ', users)
+ 
   return {
     isAuthenticating: authentication.isAuthenticating,
     isAuthed: authentication.isAuthed,

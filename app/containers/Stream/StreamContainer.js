@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { Navbar, StreamListView , CustomButton, Gear}  from './../../components'
 import { userOnboarded } from './../../redux/modules/users'
 import { PostContainer, UserProfileContainer, ProductContainer, BrandContainer, CollectionContainer} from  './../../containers'
+import { fetchAllPosts } from './../../redux/modules/posts'
+
 const { height,width } = Dimensions.get('window')
 
 class StreamContainer extends Component {
@@ -22,7 +24,7 @@ class StreamContainer extends Component {
       needed: newCounter,
       readyToFinish: isFinished
     });
-    console.log(newCounter);
+    if(isFinished) { this.props.dispatch(fetchAllPosts());}
   }
 
   constructor (props) {
@@ -31,6 +33,8 @@ class StreamContainer extends Component {
       needed: 3, // the number of categories needed
       readyToFinish: false, // when the user has selected at least x needed categories
     }
+     this.props.dispatch(fetchAllPosts())
+    // console.log('FETCH ALL POSTS')
   }
 
 
@@ -161,16 +165,9 @@ const styles = StyleSheet.create({
 })
 
 
-function mapStateToProps ({scores, users}) {
+function mapStateToProps ({posts}) {
   return { 
-    friends: users.friends,
-    subscribing: users.subscribing,
-    leaders: scores.leaderboardUids.map((uid) => {
-      return {
-        score: 10,
-        ...users[uid],
-      }
-    })
+    posts: posts.posts,
   }
 }
 

@@ -1,6 +1,9 @@
-import React, { PropTypes, Component } from 'react'
+import React, { PropTypes, Component } from 'react';
+import { connect } from 'react-redux';
 import { ScrollView, View, Text, StyleSheet, Image, ListView, Dimensions, TouchableOpacity, InteractionManager} from 'react-native';
-import { Gear, Hamburger, Heart, TagLabel, MoreDots} from './../../components'
+import { Gear, Hamburger, Heart, TagLabel, MoreDots} from './../../components';
+import { fetchPost } from './../../redux/modules/posts';
+
 const { height,width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -94,7 +97,6 @@ const styles = StyleSheet.create({
     height: 120,
     marginRight: 20, 
   }
- 
 });
 
 
@@ -105,70 +107,59 @@ class PostContainer extends Component {
   }
   constructor (props) {
     super(props) 
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
-    const ds2 = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows([
-      {
-        itemPicture: 'https://s-media-cache-ak0.pinimg.com/474x/37/54/d8/3754d8fc4d268fc7f4e75c2cab750317.jpg',
-        brandPicture: 'https://s-media-cache-ak0.pinimg.com/474x/e3/dc/15/e3dc15d1211ea0c80d73aaa463c8f5aa.jpg',
-      },
-      {
-        itemPicture: 'https://images.solecollector.com/complex/image/upload/tjdabf6iwrxjcxvofqm0.jpg', 
-        brandPicture: 'https://s-media-cache-ak0.pinimg.com/474x/79/e2/06/79e2068640f510a47c3289b6b049619f.jpg',
-      },
-      {
-        itemPicture: 'https://s-media-cache-ak0.pinimg.com/474x/f0/97/1e/f0971e2847e070ef366b1418efe0b93c.jpg',
-        brandPicture: 'https://s-media-cache-ak0.pinimg.com/474x/b0/36/ad/b036ad71d95404df03616bd795b95759.jpg',
-      },
-      {
-        itemPicture: 'https://s-media-cache-ak0.pinimg.com/474x/aa/24/2c/aa242c4b74c6c546608bc2ef17a395ed.jpg',
-        brandPicture: 'https://pbs.twimg.com/profile_images/562585381879549952/QUzYZhD1.jpeg',
-      },
-      {
-        itemPicture: 'https://s-media-cache-ak0.pinimg.com/474x/0c/f2/f4/0cf2f421b5d9b19b6a7c21d31cc7ab94.jpg',
-        brandPicture: 'https://s-media-cache-ak0.pinimg.com/236x/39/26/d5/3926d54ee14b0def927e000117b208a7.jpg',
-      },
-      {
-        itemPicture: 'https://s-media-cache-ak0.pinimg.com/474x/be/d9/d5/bed9d54eceb7beed5a9f0bf3fb10eb82.jpg',
-        brandPicture: 'http://www.2022mag.com/wp-content/uploads/2016/10/nike-logo-copy.jpg',
-      }
-      ]),
-      dataSource2: ds2.cloneWithRows([
-      {
-        itemPicture: 'https://s-media-cache-ak0.pinimg.com/474x/41/a6/b4/41a6b4ab8885d0534e1547fbc4815e3f.jpg',
-        brandPicture: 'https://s-media-cache-ak0.pinimg.com/474x/e3/dc/15/e3dc15d1211ea0c80d73aaa463c8f5aa.jpg',
-      },
-      {
-        itemPicture: 'https://s-media-cache-ak0.pinimg.com/474x/70/eb/e8/70ebe8ff2103d6794e606e2e50ee10e2.jpg', 
-        brandPicture: 'https://s-media-cache-ak0.pinimg.com/474x/79/e2/06/79e2068640f510a47c3289b6b049619f.jpg',
-      },
-      {
-        itemPicture: 'https://s-media-cache-ak0.pinimg.com/236x/c7/50/e9/c750e9d4b939f6d780d6aec04b9a1e92.jpg',
-        brandPicture: 'https://s-media-cache-ak0.pinimg.com/474x/b0/36/ad/b036ad71d95404df03616bd795b95759.jpg',
-      },
-      {
-        itemPicture: 'https://s-media-cache-ak0.pinimg.com/474x/e9/d3/5a/e9d35a57733d1a0c77e348f996e7e55f.jpg',
-        brandPicture: 'https://pbs.twimg.com/profile_images/562585381879549952/QUzYZhD1.jpeg',
-      },
-      {
-        itemPicture: 'https://s-media-cache-ak0.pinimg.com/474x/8d/1f/4d/8d1f4ded3226bc85f98b23524e883541.jpg',
-        brandPicture: 'https://s-media-cache-ak0.pinimg.com/236x/39/26/d5/3926d54ee14b0def927e000117b208a7.jpg',
-      },
-      {
-        itemPicture: 'https://s-media-cache-ak0.pinimg.com/474x/be/d9/d5/bed9d54eceb7beed5a9f0bf3fb10eb82.jpg',
-        brandPicture: 'http://www.2022mag.com/wp-content/uploads/2016/10/nike-logo-copy.jpg',
-      }
-      ])
-    };
-
+        active: false,
+      };
   }
+
   componentDidMount() {
- 
+    this.props.dispatch(fetchPost(this.props.id));
   }
 
- onPress = () =>{ 
+
+  componentDidUpdate(prevProps, prevState){
+    // I've received new props, I need to decide if I need to update the data store or not.
+    // (prevProps, prevState)
+  
+     console.log('--- COMPONENT DID UPDATE --- ')
+     try{
+     console.log('this.props.post.id' , this.props.post.id)
+     console.log('this.state.dataSource' ,this.state.dataSource)
+     console.log('prevstate.id != post.id', this.props.id != this.props.post.id)
+     console.log('FIRST CONDITION ', (this.props.post.id && this.prevState == undefined))
+     console.log('Second condition ',  (this.props.post.id != this.prevState.id))
+     } catch(e){}
+    // update only if you have a post Id and if you didn't have generate already a datasource.
+    if((this.props.post.id && this.state.dataSource == undefined) || (this.props.post.id != this.props.id)){
+      const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+      // this.props.post.Products.PostProduct.category
+
+      var dictionary = [];
+      for(var i = 0; i<this.props.post.Products.length; i++){
+        if(!dictionary[this.props.post.Products[i].PostProduct.category]){
+          dictionary[this.props.post.Products[i].PostProduct.category] = [];
+        }
+        dictionary[this.props.post.Products[i].PostProduct.category].push(this.props.post.Products[i]);
+      } 
+
+      var itemDataSources = [];
+      var keys = [];
+      for (var key in dictionary) {
+        keys.push(key);
+        itemDataSources.push(ds.cloneWithRows(dictionary[key]));
+      }
+
+
+      this.setState({
+        keys: keys,
+        dataSource: itemDataSources,
+      });
+       
+    } 
+  }
+
+
+  onPress = () =>{ 
     const newState = !this.state.active;
     this.setState({
           active: newState
@@ -214,50 +205,50 @@ class PostContainer extends Component {
         <Text style={styles.descriptionText}>This is a detail description of something long.</Text>
         <View style={styles.tagList}>
           <Text style={styles.tagTitle}>Tags: </Text>
-          <TagLabel onPress={this._navigateToCollection.bind(this)} description="Black & White" />
-          <TagLabel onPress={this._navigateToCollection.bind(this)} description="Daily Fashion" />
-          <TagLabel onPress={this._navigateToCollection.bind(this)} description="Trendy" />
+          {this.props.post && this.props.post.Tags.map(function(tag, i){
+            return <TagLabel key={i} description={tag.displayName} />
+          })}
         </View>
         <View style={styles.tagList}>
           <Text style={styles.tagTitle}>Brands: </Text>
-          <TagLabel description="Adidas" />
-          <TagLabel description="H&M" />
+           {this.props.post && this.props.post.Brands.map(function(brand, i){
+            return <TagLabel key={i} description={brand.displayName} />
+          })}
         </View>
-        <View style={styles.separationLine} />
-        <View>
-          <Text style={styles.tagTitle}>Shoes: </Text>
-          <ListView horizontal={true}
-          showsHorizontalScrollIndicator={false}
-            style={styles.productHolder}
-            dataSource={this.state.dataSource}
-            renderRow={(rowData) => <View>
-                <TouchableOpacity style={styles.productItem} onPress={this._navigateToProduct.bind(this,rowData)}> 
-                  <Image style={styles.roundedProduct} source={{uri:rowData.itemPicture }} />
-                  <Image style={styles.roundedBrand} source={{uri:rowData.brandPicture }} />
-                </TouchableOpacity>
-              </View>}
-          />
-        </View>
-        <View style={styles.separationLine} />
-        <View>
-          <Text style={styles.tagTitle}>T-Shirt: </Text>
-          <ListView horizontal={true}
-            style={styles.productHolder}
-             showsHorizontalScrollIndicator={false}
-            dataSource={this.state.dataSource2}
-            renderRow={(rowData) => <View>
-                <TouchableOpacity style={styles.productItem} onPress={this._navigateToProduct.bind(this,rowData)}> 
-                  <Image style={styles.roundedProduct} source={{uri:rowData.itemPicture }} />
-                  <Image style={styles.roundedBrand} source={{uri:rowData.brandPicture }} />
-                </TouchableOpacity>
-              </View>}
-          />
-        </View>
-       </View>
+        
+        {this.state.dataSource && this.state.dataSource.map(function(dataSourceEntry, i){
+          console.log(dataSourceEntry);
+          return  (<View key={i}>
+                    <View style={styles.separationLine} />
+                    <Text style={styles.tagTitle}>{this.state.keys[i] + ':'} </Text>
+                    <ListView horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                      style={styles.productHolder}
+                      dataSource={dataSourceEntry}
+                      renderRow={(rowData) => <View>
+                          <TouchableOpacity onPress={this._navigateToProduct.bind(this, rowData)} style={styles.productItem}>
+                            <Image style={styles.roundedProduct} source={{uri:rowData.picture }} />
+                            <Image style={styles.roundedBrand} source={{uri:rowData.Brand.picture }} />
+                          </TouchableOpacity>
+                        </View>}
+                    />
+                  </View>)
+        }, this)}
+       </View> 
       </ScrollView>
 
     )
   }
 }
 
-export default PostContainer
+//onPress={this._navigateToProduct.bind(this,rowData)}> 
+
+function mapStateToProps ({posts}) {
+  console.log('CALLED MAP STATE TO PROPS')
+  return { 
+    post: posts.currentPost,
+  }
+}
+
+
+export default connect(mapStateToProps)(PostContainer)

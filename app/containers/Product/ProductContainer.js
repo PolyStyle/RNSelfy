@@ -184,7 +184,7 @@ class ProductContainer extends Component {
   componentDidMount() {
     // Set a ratio. We should allow picture with the height between 1/2 and 3/2 of the width
     // TODO: too time consuming, needs to be refactored.
-       Image.getSize(this.props.itemPicture, (srcWidth, srcHeight) => {
+       Image.getSize(this.props.picture, (srcWidth, srcHeight) => {
         const maxHeight = Dimensions.get('window').height; // or something else
         const maxWidth = Dimensions.get('window').width;
         const imageRatio = srcWidth/srcHeight;
@@ -222,7 +222,7 @@ class ProductContainer extends Component {
   render(){ 
     return (
       <ScrollView style={styles.container}>
-       <Image shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true} source={{uri:this.state.currentImage || this.props.itemPicture }} style={{ width: this.state.width, height: this.state.height }}>
+       <Image shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true} source={{uri:this.props.picture }} style={{ width: this.state.width, height: this.state.height }}>
        </Image>
        <View>
           <ListView horizontal={true}

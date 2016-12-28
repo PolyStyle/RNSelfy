@@ -126,7 +126,7 @@ class Item extends Component {
     })
   }
 
-  _navigateToBrand(){
+  _navigateToBrand(brandData){
   this.props.navigator.push({
       name: 'Brand',
       title: 'Brand name',
@@ -145,7 +145,25 @@ class Item extends Component {
   }
 
 
+/*
+Array[0]
+Products
+:
+Array[0]
+Tags
+:
+Array[0]
+UserId
+:
+1
+createdAt
+:
+"2016-12-25T20:26:19.000Z"description:"Marcos favorite outfit"
+id:20
+picture:"https://s-media-cache-ak0.pinimg.com/474x/1a/eb/2e/1aeb2eff3242f5884a8a23e4bdb7946f.jpg"
+updatedAt:"2016-12-25T20:26:19.000Z"
 
+*/
   render(){
     return (
       <View  shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true} style={styles.container}>
@@ -154,8 +172,8 @@ class Item extends Component {
         </TouchableHighlight>
         <TouchableHighlight style={styles.avatarContainer} onPress={this._navigateToUser.bind(this)}>
         <View style={styles.avatarContainer} >
-            <Text style={styles.avatarName}> {this.props.username} </Text>
-            <Image style={styles.avatar} source={{uri:this.props.avatar}} /> 
+            <Text style={styles.avatarName}> UserName </Text>
+            <Image style={styles.avatar} source={{uri:this.props.picture}} /> 
         </View>
         </TouchableHighlight>
        <View style={styles.descriptions}>
@@ -164,21 +182,23 @@ class Item extends Component {
           <MoreDots style={styles.addIcon} onPress={this.onPress.bind(this)}/>
         </View>
         <View style={styles.separationLine} />
-        <Text style={styles.descriptionText}>This is a detail description of something long.</Text>
-        <View style={styles.tagList}>
+        <Text style={styles.descriptionText}>{this.props.description}</Text>
+        {this.props.Tags.length > 0 && <View style={styles.tagList}>
           <Text style={styles.tagTitle}>Tags: </Text>
-          <TagLabel onPress={this._navigateToCollection.bind(this)} description="Black & White" />
-          <TagLabel onPress={this._navigateToCollection.bind(this)} description="Daily Fashion" />
-          <TagLabel onPress={this._navigateToCollection.bind(this)} description="Trendy" />
-        </View>
-        <View style={styles.tagList}>
+
+          {this.props.Tags.map(function(object, i){
+                return <TagLabel onPress={this._navigateToCollection.bind(this, object)} description={object.displayName} key={i}/>
+          }, this)}
+        </View>} 
+        {this.props.Brands.length > 0 &&<View style={styles.tagList}>
           <Text style={styles.tagTitle}>Brands: </Text>
-          <TagLabel onPress={this._navigateToBrand.bind(this)}  description="Adidas" />
-          <TagLabel onPress={this._navigateToBrand.bind(this)}  description="H&M" />
+          {this.props.Brands.map(function(object, i){
+                return <TagLabel onPress={this._navigateToBrand.bind(this, object)} description={object.displayName} key={i} /> 
+          }, this)}
         </View>
+      }
        </View>
       </View>
-
     )
   }
 }
