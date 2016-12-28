@@ -44,7 +44,7 @@ export default function posts (state = initialState, action) {
         isFetching: false,
         brands: [action.brand]
       }
-    case SET_CURRENT_POST:
+    case SET_CURRENT_BRAND:
       return {
         ...state,
         isFetching: false,
