@@ -71,75 +71,36 @@ const styles = StyleSheet.create({
 });
 
 class BrandContainer extends Component{
-
-  formatData(data) {
-    // We're sorting by alphabetically so we need the alphabet
-    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-    // Need somewhere to store our data
-    const dataBlob = {};
-    const sectionIds = [];
-    const rowIds = [];
-    // Each section is going to represent a letter in the alphabet so we loop over the alphabet
-    for (let sectionId = 0; sectionId < alphabet.length; sectionId++) {
-      // Get the character we're currently looking for
-      const currentChar = alphabet[sectionId];
-      // Get users whose first name starts with the current letter
-      const users = data.filter((user) => user.name.toUpperCase().indexOf(currentChar) === 0);
-      // If there are any users who have a first name starting with the current letter then we'll
-      // add a new section otherwise we just skip over it
-      if (users.length > 0) {
-        // Add a section id to our array so the listview knows that we've got a new section
-        sectionIds.push(sectionId);
-        // Store any data we would want to display in the section header. In our case we want to show
-        // the current character
-        dataBlob[sectionId] = { character: currentChar };
-        // Setup a new array that we can store the row ids for this section
-        rowIds.push([]);
-        // Loop over the valid users for this section
-        for (let i = 0; i < users.length; i++) {
-          // Create a unique row id for the data blob that the listview can use for reference
-          const rowId = `${sectionId}:${i}`;
-          // Push the row id to the row ids array. This is what listview will reference to pull
-          // data from our data blob
-          rowIds[rowIds.length - 1].push(rowId);
-          // Store the data we care about for this row
-          dataBlob[rowId] = users[i];
-        }
-      }
-    }
-    return { dataBlob, sectionIds, rowIds };
-  }
  
   constructor(props) {
     super(props);
+    this.state = {};
+    if(this.props.brandStream){
+      renderLists();
+    }
     
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {
-      dataSource: ds.cloneWithRows(this.props.brandStream || []),
-    };
+  }
+
+  componentDidUpdate(prevProps, prevState){
+     renderLists();
   }
 
 
-  componentDidUpdate(prevProps, prevState){
+  componentDidMount() {
+    this.props.dispatch(fetchBrand(this.props.id));
+    this.props.dispatch(fetchBrandStream(this.props.id));
+  }
+
+  renderLists(){
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const newDataStore = ds.cloneWithRows(this.props.brandStream);
     if(this.state.dataSource._cachedRowCount !=  newDataStore._cachedRowCount){
       this.setState({
         dataSource: newDataStore,
       });
-      console.log('I HAVE NEW DATA SOURCe')
     }
-
   }
-
-
-  componentDidMount() {
-    console.log('Component page Brands did mount')
-    console.log(this.props)
-    this.props.dispatch(fetchBrand(this.props.id));
-    this.props.dispatch(fetchBrandStream(this.props.id));
-  }
-
+  
 
   handlerSelection(id,active){
     console.log('bubble up')
@@ -150,7 +111,9 @@ class BrandContainer extends Component{
     console.log('this from render header ', this)
    return ( 
     <View style={styles.containerHeader}>
-    <Image style={styles.backgroundHeader} shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true} source={{uri: this.props.brand.headerBackground}} >
+    <Image style={styles.backgroundHeader} shouldRasterizeIOS={true} 
+        renderToHardwareTextureAndroid={true} 
+        source={{uri: this.props.brand.headerBackground}} >
        <View style={styles.avatarContainer} >
       <Image style={styles.avatar} source={{uri:this.props.brand.picture}} /> 
       </View>
