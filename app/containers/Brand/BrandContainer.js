@@ -74,41 +74,41 @@ class BrandContainer extends Component{
  
   constructor(props) {
     super(props);
-    this.state = {};
-    if(this.props.brandStream){
-      renderLists();
+    this.state = {
+      dataSource: null
     }
-    
+    this._renderList();
   }
+
 
   componentDidUpdate(prevProps, prevState){
-     renderLists();
+    this._renderList();
   }
 
-
   componentDidMount() {
+    console.log('Component page Brands did mount')
+    console.log(this.props)
     this.props.dispatch(fetchBrand(this.props.id));
     this.props.dispatch(fetchBrandStream(this.props.id));
   }
 
-  renderLists(){
+  _renderList(){
+    if(!this.props.brandStream) return;
+
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const newDataStore = ds.cloneWithRows(this.props.brandStream);
-    if(this.state.dataSource._cachedRowCount !=  newDataStore._cachedRowCount){
+    if(this.state.dataSource == null || (this.state.dataSource._cachedRowCount != newDataStore._cachedRowCount)){
       this.setState({
         dataSource: newDataStore,
       });
     }
   }
-  
-
   handlerSelection(id,active){
     console.log('bubble up')
     //this.props.handlerSelection(id,active);
   }
 
   _renderHeader(){
-    console.log('this from render header ', this)
    return ( 
     <View style={styles.containerHeader}>
     <Image style={styles.backgroundHeader} shouldRasterizeIOS={true} 
