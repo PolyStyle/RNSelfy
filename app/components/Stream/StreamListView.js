@@ -30,9 +30,10 @@ class StreamListView extends React.Component {
   componentDidUpdate(props){
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const newDataStore = ds.cloneWithRows(this.props.posts);
+    // TODO: the stop condition to avoid loop updates is really naive, to be fixed
     if(this.state.dataSource._cachedRowCount !=  newDataStore._cachedRowCount){
       this.setState({
-        dataSource: ds.cloneWithRows(props.posts),
+        dataSource: newDataStore,
       });
     }
      
@@ -66,6 +67,8 @@ class StreamListView extends React.Component {
     });
   }
   */
+
+
 
   handlerSelection(id,active){
     //this.props.handlerSelection(id,active);

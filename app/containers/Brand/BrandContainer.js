@@ -1,7 +1,8 @@
-
-import React from 'react';
+import React, { PropTypes, Component } from 'react';
 import { View, ListView, StyleSheet, Text, Dimensions, Image, TouchableOpacity} from 'react-native';
 import { ProductItem, FilterLabel }  from './../../components'
+import { connect } from 'react-redux';
+import { fetchBrand, fetchBrandStream} from './../../redux/modules/brands';
 const { height,width } = Dimensions.get('window')
 
 
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class BrandContainer extends React.Component {
+class BrandContainer extends Component{
 
   formatData(data) {
     // We're sorting by alphabetically so we need the alphabet
@@ -106,107 +107,39 @@ class BrandContainer extends React.Component {
         }
       }
     }
-
     return { dataBlob, sectionIds, rowIds };
   }
  
   constructor(props) {
     super(props);
-    const demoData = data = [
-    {
-      "name": 'theUserName',
-      "picture": "https://s-media-cache-ak0.pinimg.com/474x/6f/f1/1b/6ff11b277d760547b1115731dfe73b23.jpg",
-      "avatar": "https://d13yacurqjgara.cloudfront.net/users/40224/screenshots/2589124/adidas_illustration.jpg",
-      "username": 'Adidas',
-      "items": [
-        {
-          name: 'Shoes',
-          brandId: '1',
-          brandName: 'Adidas'
-        }
-      ]
-    },
-    {
-      "name": 'theUserName',
-      "username": 'Nicola Bortignon',
-      "picture": "https://s-media-cache-ak0.pinimg.com/474x/83/a6/0e/83a60ee86d65918813160e4788d6e9b8.jpg",
-      "avatar": "https://s-media-cache-ak0.pinimg.com/474x/68/2d/4c/682d4c97619c67a56da0f1a7227f1352.jpg",
-      "items": [
-        {
-          name: 'Shoes',
-          brandId: '1',
-          brandName: 'Adidas'
-        }
-      ]
-    },
-    {
-      "name": 'theUserName',
-      "username": 'Nicola Bortignon',
-      "picture": "https://s-media-cache-ak0.pinimg.com/474x/18/c5/59/18c559851cce56c254d6c7ff19a12d1e.jpg",
-      "avatar": "https://s-media-cache-ak0.pinimg.com/564x/68/2d/4c/682d4c97619c67a56da0f1a7227f1352.jpg",
-      "items": [
-        {
-          name: 'Shoes',
-          brandId: '1',
-          brandName: 'Adidas'
-        }
-      ]
-    },
-        {
-      "name": 'theUserName',
-      "username": 'Nicola Bortignon',
-      "picture": "https://s-media-cache-ak0.pinimg.com/474x/18/c5/59/18c559851cce56c254d6c7ff19a12d1e.jpg",
-      "avatar": "https://s-media-cache-ak0.pinimg.com/564x/68/2d/4c/682d4c97619c67a56da0f1a7227f1352.jpg",
-      "items": [
-        {
-          name: 'Shoes',
-          brandId: '1',
-          brandName: 'Adidas'
-        }
-      ]
-    },    {
-      "name": 'theUserName',
-      "username": 'Nicola Bortignon',
-      "picture": "https://s-media-cache-ak0.pinimg.com/474x/18/c5/59/18c559851cce56c254d6c7ff19a12d1e.jpg",
-      "avatar": "https://s-media-cache-ak0.pinimg.com/564x/68/2d/4c/682d4c97619c67a56da0f1a7227f1352.jpg",
-      "items": [
-        {
-          name: 'Shoes',
-          brandId: '1',
-          brandName: 'Adidas'
-        }
-      ]
-    },    {
-      "name": 'theUserName',
-      "username": 'Nicola Bortignon',
-      "picture": "https://s-media-cache-ak0.pinimg.com/474x/18/c5/59/18c559851cce56c254d6c7ff19a12d1e.jpg",
-      "avatar": "https://s-media-cache-ak0.pinimg.com/564x/68/2d/4c/682d4c97619c67a56da0f1a7227f1352.jpg",
-      "items": [
-        {
-          name: 'Shoes',
-          brandId: '1',
-          brandName: 'Adidas'
-        }
-      ]
-    },
-
     
-      ];
-    const getSectionData = (dataBlob, sectionId) => dataBlob[sectionId];
-    const getRowData = (dataBlob, sectionId, rowId) => dataBlob[`${rowId}`];
-
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2,
-      sectionHeaderHasChanged : (s1, s2) => s1 !== s2,
-      getSectionData,
-      getRowData,
-    });
-
-    const { dataBlob, sectionIds, rowIds } = this.formatData(demoData);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRowsAndSections(dataBlob, sectionIds, rowIds),
+      dataSource: ds.cloneWithRows(this.props.brandStream || []),
     };
   }
+
+
+  componentDidUpdate(prevProps, prevState){
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    const newDataStore = ds.cloneWithRows(this.props.brandStream);
+    if(this.state.dataSource._cachedRowCount !=  newDataStore._cachedRowCount){
+      this.setState({
+        dataSource: newDataStore,
+      });
+      console.log('I HAVE NEW DATA SOURCe')
+    }
+
+  }
+
+
+  componentDidMount() {
+    console.log('Component page Brands did mount')
+    console.log(this.props)
+    this.props.dispatch(fetchBrand(this.props.id));
+    this.props.dispatch(fetchBrandStream(this.props.id));
+  }
+
 
   handlerSelection(id,active){
     console.log('bubble up')
@@ -214,11 +147,12 @@ class BrandContainer extends React.Component {
   }
 
   _renderHeader(){
+    console.log('this from render header ', this)
    return ( 
     <View style={styles.containerHeader}>
-    <Image style={styles.backgroundHeader} shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true} source={{uri:'https://s-media-cache-ak0.pinimg.com/474x/11/bc/0f/11bc0f45fb59d504151d6cd7f8d4c3ce.jpg'}} >
+    <Image style={styles.backgroundHeader} shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true} source={{uri: this.props.brand.headerBackground}} >
        <View style={styles.avatarContainer} >
-      <Image style={styles.avatar} source={{uri:'https://s-media-cache-ak0.pinimg.com/474x/c9/56/b1/c956b12e03c4de882bf1516343e9f489.jpg'}} /> 
+      <Image style={styles.avatar} source={{uri:this.props.brand.picture}} /> 
       </View>
     </Image>
 
@@ -228,10 +162,12 @@ class BrandContainer extends React.Component {
   }
 
   _renderSectionHeader(){
+    
     return ( 
     <View style={styles.sectionHeaderContainer}>
            <ListView horizontal={true}
             showsHorizontalScrollIndicator={false}
+            removeClippedSubviews={false}
             dataSource={this.state.dataSource}
             renderRow={(rowData) => <View>
                 <TouchableOpacity> 
@@ -240,6 +176,7 @@ class BrandContainer extends React.Component {
               </View>}
           />
     </View>)
+ 
   }
 
 
@@ -253,18 +190,33 @@ class BrandContainer extends React.Component {
       }
 
   render() {
-    return ( 
-        <ListView 
-          renderHeader={this._renderHeader}
-          renderSectionHeader={this._renderSectionHeader.bind(this)} 
-          initialListSize ={2}
-          removeClippedSubviews={true} 
-          style={styles.container}
-          dataSource={this.state.dataSource}
-          renderRow={(data) => <ProductItem navigator={this.props.navigator} {...data} active={false}  />}
-        /> 
-    );
+    if( this.props.brand && this.state.dataSource){
+      return ( 
+          <ListView 
+            renderHeader={this._renderHeader.bind(this)}
+            renderSectionHeader={this._renderSectionHeader.bind(this)} 
+            initialListSize ={2}
+            removeClippedSubviews={true} 
+            style={styles.container}
+            dataSource={this.state.dataSource}
+            renderRow={(data) => <ProductItem navigator={this.props.navigator} {...data} active={false}  />}
+          /> 
+      );
+    } else {
+      return (<View/>)
+    }
   }
 }
 
-export default BrandContainer;
+
+function mapStateToProps ({brands}) {
+  console.log('CALLED MAP STATE TO PROPS on BRANDS')
+  console.log(brands)
+  return { 
+    brand: brands.currentBrand,
+    brandStream: brands.currentBrandStream
+  }
+}
+
+
+export default connect(mapStateToProps)(BrandContainer)

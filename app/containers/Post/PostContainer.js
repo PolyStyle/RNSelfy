@@ -120,7 +120,7 @@ class PostContainer extends Component {
   componentDidUpdate(prevProps, prevState){
     // I've received new props, I need to decide if I need to update the data store or not.
     // (prevProps, prevState)
-  
+    /*
      console.log('--- COMPONENT DID UPDATE --- ')
      try{
      console.log('this.props.post.id' , this.props.post.id)
@@ -129,6 +129,7 @@ class PostContainer extends Component {
      console.log('FIRST CONDITION ', (this.props.post.id && this.prevState == undefined))
      console.log('Second condition ',  (this.props.post.id != this.prevState.id))
      } catch(e){}
+     */
     // update only if you have a post Id and if you didn't have generate already a datasource.
     if((this.props.post.id && this.state.dataSource == undefined) || (this.props.post.id != this.props.id)){
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -217,7 +218,6 @@ class PostContainer extends Component {
         </View>
         
         {this.state.dataSource && this.state.dataSource.map(function(dataSourceEntry, i){
-          console.log(dataSourceEntry);
           return  (<View key={i}>
                     <View style={styles.separationLine} />
                     <Text style={styles.tagTitle}>{this.state.keys[i] + ':'} </Text>
@@ -244,7 +244,6 @@ class PostContainer extends Component {
 //onPress={this._navigateToProduct.bind(this,rowData)}> 
 
 function mapStateToProps ({posts}) {
-  console.log('CALLED MAP STATE TO PROPS')
   return { 
     post: posts.currentPost,
   }

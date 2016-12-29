@@ -129,9 +129,8 @@ class Item extends Component {
   _navigateToBrand(brandData){
   this.props.navigator.push({
       name: 'Brand',
-      title: 'Brand name',
-      passProps: this.props,
-      passState: this.state
+      title: brandData.displayName,
+      passProps: brandData,
     })
   }
 
