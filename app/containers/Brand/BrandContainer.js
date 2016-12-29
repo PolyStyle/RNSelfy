@@ -152,19 +152,16 @@ class BrandContainer extends Component{
                 </TouchableOpacity>
               </View>}
           />
-    </View>)
- 
+    </View>) 
   }
 
-
   _navigateToProduct(rowData){
-    console.log('NAVIGATE TO PRODUCT');
-      this.props.navigator.push({
-          name: 'Product',
-          title: 'Product',
-          passProps: rowData,
-        })
-      }
+    this.props.navigator.push({
+        name: 'Product',
+        title: 'Product',
+        passProps: rowData,
+    })
+  }
 
   render() {
     if( this.props.brand && this.state.dataSource){
@@ -185,7 +182,6 @@ class BrandContainer extends Component{
   }
 }
 
-
 function mapStateToProps ({brands}) {
   console.log('CALLED MAP STATE TO PROPS on BRANDS')
   console.log(brands)
@@ -194,6 +190,5 @@ function mapStateToProps ({brands}) {
     brandStream: brands.currentBrandStream
   }
 }
-
 
 export default connect(mapStateToProps)(BrandContainer)

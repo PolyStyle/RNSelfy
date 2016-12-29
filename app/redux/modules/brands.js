@@ -59,7 +59,7 @@ const initialState = {
   currentBrand: null
 }
 
-export default function posts (state = initialState, action) { 
+export default function brands (state = initialState, action) { 
   console.log(action)
   switch (action.type) {
     case SET_CURRENT_BRAND_STREAM:
