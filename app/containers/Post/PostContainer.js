@@ -170,6 +170,14 @@ class PostContainer extends Component {
     } 
     });
   }
+  
+  _navigateToBrand(brandData){
+  this.props.navigator.push({
+      name: 'Brand',
+      title: brandData.displayName,
+      passProps: brandData,
+    })
+  }
 
   _navigateToProduct(rowData){
   this.props.navigator.push({
@@ -202,37 +210,37 @@ class PostContainer extends Component {
           <MoreDots style={styles.addIcon} onPress={this.onPress.bind(this)}/>
         </View>
         <View style={styles.separationLine} />
-        <Text style={styles.descriptionText}>Posted by: {this.props.name} </Text>
+        <Text style={styles.descriptionText}>Posted by: {this.props.User.displayName} </Text>
         <Text style={styles.descriptionText}>This is a detail description of something long.</Text>
         <View style={styles.tagList}>
           <Text style={styles.tagTitle}>Tags: </Text>
           {this.props.post && this.props.post.Tags.map(function(tag, i){
-            return <TagLabel key={i} description={tag.displayName} />
-          })}
+            return <TagLabel onPress={this._navigateToCollection.bind(this, tag)} key={i} description={tag.displayName} />
+          }, this)}
         </View>
         <View style={styles.tagList}>
           <Text style={styles.tagTitle}>Brands: </Text>
            {this.props.post && this.props.post.Brands.map(function(brand, i){
-            return <TagLabel key={i} description={brand.displayName} />
-          })}
+            return <TagLabel onPress={this._navigateToBrand.bind(this, brand)} key={i} description={brand.displayName} />
+          }, this)}
         </View>
         
         {this.state.dataSource && this.state.dataSource.map(function(dataSourceEntry, i){
           return  (<View key={i}>
-                    <View style={styles.separationLine} />
-                    <Text style={styles.tagTitle}>{this.state.keys[i] + ':'} </Text>
-                    <ListView horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                      style={styles.productHolder}
-                      dataSource={dataSourceEntry}
-                      renderRow={(rowData) => <View>
-                          <TouchableOpacity onPress={this._navigateToProduct.bind(this, rowData)} style={styles.productItem}>
-                            <Image style={styles.roundedProduct} source={{uri:rowData.picture }} />
-                            <Image style={styles.roundedBrand} source={{uri:rowData.Brand.picture }} />
-                          </TouchableOpacity>
-                        </View>}
-                    />
-                  </View>)
+            <View style={styles.separationLine} />
+            <Text style={styles.tagTitle}>{this.state.keys[i] + ':'} </Text>
+            <ListView horizontal={true}
+            showsHorizontalScrollIndicator={false}
+              style={styles.productHolder}
+              dataSource={dataSourceEntry}
+              renderRow={(rowData) => <View>
+                  <TouchableOpacity onPress={this._navigateToProduct.bind(this, rowData)} style={styles.productItem}>
+                    <Image style={styles.roundedProduct} source={{uri:rowData.picture }} />
+                    <Image style={styles.roundedBrand} source={{uri:rowData.Brand.picture }} />
+                  </TouchableOpacity>
+                </View>}
+              />
+            </View>)
         }, this)}
        </View> 
       </ScrollView>

@@ -95,10 +95,25 @@ class BrandContainer extends Component{
   _renderList(){
     if(!this.props.brandStream) return;
 
+    var filters = [];
+
+    for(var i=0; i<this.props.brandStream.length; i++){
+      for(var j=0; j<this.props.brandStream[i].Tags.length; j++){
+        var tag = this.props.brandStream[i].Tags[j];
+        if(filters[tag.displayName] == null){
+          filters[tag.displayName] = {displayName: tag.displayName, id: tag.id, quantity: 1}
+        } else {
+          filters[tag.displayName].quantity++;
+        }
+      } 
+    }
+
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const newDataStore = ds.cloneWithRows(this.props.brandStream);
+    const newFilterDataStore = ds.cloneWithRows(filters);
     if(this.state.dataSource == null || (this.state.dataSource._cachedRowCount != newDataStore._cachedRowCount)){
       this.setState({
+        filterDataStore :newFilterDataStore, 
         dataSource: newDataStore,
       });
     }
@@ -125,16 +140,15 @@ class BrandContainer extends Component{
   }
 
   _renderSectionHeader(){
-    
     return ( 
     <View style={styles.sectionHeaderContainer}>
            <ListView horizontal={true}
             showsHorizontalScrollIndicator={false}
             removeClippedSubviews={false}
-            dataSource={this.state.dataSource}
+            dataSource={this.state.filterDataStore}
             renderRow={(rowData) => <View>
                 <TouchableOpacity> 
-                  <FilterLabel description="Accessories" />
+                  <FilterLabel quantity={rowData.quantity} description={rowData.displayName} />
                 </TouchableOpacity>
               </View>}
           />

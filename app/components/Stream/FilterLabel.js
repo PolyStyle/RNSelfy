@@ -10,11 +10,20 @@ const styles = StyleSheet.create({
     marginRight: 2,
   },
   touchArea: {
-    backgroundColor: 'transparent'
+    flex: 1,
+    backgroundColor: 'transparent',
+    flexDirection: 'row', 
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   labelText: {
-    color: "#ffffff", 
+    color: "#cccccc", 
     fontSize: 14
+  },
+  quantity:{
+    color: "#999999",
+    fontSize: 10
+
   }
 
 });
@@ -23,6 +32,7 @@ const styles = StyleSheet.create({
 class FilterLabel extends Component {
   static propTypes = {
     description: PropTypes.string.isRequired,
+    quantity: PropTypes.string,
     onPress: PropTypes.func,
   };
 
@@ -40,7 +50,8 @@ class FilterLabel extends Component {
     return (
     <View style={styles.labelContainer} >
       <TouchableOpacity style={styles.touchArea}  onPress={this.onPress.bind(this)}>
-        <Text  style={styles.labelText}> {this.props.description} </Text>
+        <Text style={styles.quantity}> {this.props.quantity} </Text>
+        <Text style={styles.labelText}> {this.props.description} </Text>
      </TouchableOpacity>
    </View>
     )

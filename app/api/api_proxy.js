@@ -90,3 +90,24 @@ export function getBrandStream(id) {
   });
 };
 
+
+export function getTagStream(id) {
+  var self = this;
+  console.log('called api proxy')
+  var endpoint = baseUrl + '/tags/stream/' +id;
+  return fetch(endpoint, {
+    method: 'GET',
+    headers: {'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + 'TOKEN'}
+  }).then(function(res) {
+
+      if(!isSuccess(res.status)){
+        return res.json().then(function(json) {
+          return Promise.reject(json);
+        });
+      }
+      return res.json();
+  });
+};
+
+

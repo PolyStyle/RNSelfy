@@ -170,9 +170,9 @@ updatedAt:"2016-12-25T20:26:19.000Z"
           <Image onPress={this._navigateToPost.bind(this)} source={{uri:this.props.picture}} style={{ width: this.state.width, height: this.state.height }} />
         </TouchableHighlight>
         <TouchableHighlight style={styles.avatarContainer} onPress={this._navigateToUser.bind(this)}>
-        <View style={styles.avatarContainer} >
-            <Text style={styles.avatarName}> UserName </Text>
-            <Image style={styles.avatar} source={{uri:this.props.picture}} /> 
+        <View style={styles.avatarContainer}>
+            <Text style={styles.avatarName}> {this.props.User.displayName} </Text>
+            <Image style={styles.avatar} source={{uri:this.props.User.avatar}} /> 
         </View>
         </TouchableHighlight>
        <View style={styles.descriptions}>
@@ -184,7 +184,6 @@ updatedAt:"2016-12-25T20:26:19.000Z"
         <Text style={styles.descriptionText}>{this.props.description}</Text>
         {this.props.Tags.length > 0 && <View style={styles.tagList}>
           <Text style={styles.tagTitle}>Tags: </Text>
-
           {this.props.Tags.map(function(object, i){
                 return <TagLabel onPress={this._navigateToCollection.bind(this, object)} description={object.displayName} key={i}/>
           }, this)}
