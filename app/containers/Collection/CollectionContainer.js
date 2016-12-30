@@ -5,7 +5,6 @@ import { View, ListView, StyleSheet, Text } from 'react-native';
 import { Item }  from './../../components'
 import { fetchTag,fetchTagStream  } from './../../redux/modules/tags';
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -15,7 +14,6 @@ const styles = StyleSheet.create({
 
 class CollectionContainer extends React.Component {
 
- 
   constructor(props) {
     super(props);
     this.state = {
@@ -35,7 +33,6 @@ class CollectionContainer extends React.Component {
   _renderList(){
      if(!this.props.tagStream) return;
 
-
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const newDataStore = ds.cloneWithRows(this.props.tagStream);
     // TODO: the stop condition to avoid loop updates is really naive, to be fixed
@@ -43,25 +40,27 @@ class CollectionContainer extends React.Component {
       this.setState({
         dataSource: newDataStore,
       });
-    }
-     
+    }     
   }
 
   handlerSelection(id,active){
     console.log('bubble up')
-    //this.props.handlerSelection(id,active);
   }
 
   render() {
-    return (
-      <ListView 
-        initialListSize ={2}
-        removeClippedSubviews={true} 
-        style={styles.container}
-        dataSource={this.state.dataSource}
-        renderRow={(data) => <Item navigator={this.props.navigator} {...data} active={false} onPress={this.handlerSelection.bind(this)} />}
-      />
-    );
+    if( this.props.tag && this.state.dataSource){
+      return (
+        <ListView 
+          initialListSize ={2}
+          removeClippedSubviews={true} 
+          style={styles.container}
+          dataSource={this.state.dataSource}
+          renderRow={(data) => <Item navigator={this.props.navigator} {...data} active={false} onPress={this.handlerSelection.bind(this)} />}
+        />
+      );
+    } else {
+      return (<View />)
+    }
   }
 }
 

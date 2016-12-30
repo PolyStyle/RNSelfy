@@ -99,7 +99,6 @@ export function getTag(id) {
     headers: {'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + 'TOKEN'}
   }).then(function(res) {
-
       if(!isSuccess(res.status)){
         return res.json().then(function(json) {
           return Promise.reject(json);
@@ -113,14 +112,12 @@ export function getTag(id) {
 
 export function getTagStream(id) {
   var self = this;
-  console.log('called api proxy')
   var endpoint = baseUrl + '/tags/stream/' +id;
   return fetch(endpoint, {
     method: 'GET',
     headers: {'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + 'TOKEN'}
   }).then(function(res) {
-
       if(!isSuccess(res.status)){
         return res.json().then(function(json) {
           return Promise.reject(json);
@@ -129,5 +126,79 @@ export function getTagStream(id) {
       return res.json();
   });
 };
+
+
+
+export function getUser(id) {
+  var self = this;
+  var endpoint = baseUrl + '/users/' +id;
+  return fetch(endpoint, {
+    method: 'GET',
+    headers: {'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + 'TOKEN'}
+  }).then(function(res) {
+      if(!isSuccess(res.status)){
+        return res.json().then(function(json) {
+          return Promise.reject(json);
+        });
+      }
+      return res.json();
+  });
+};
+
+
+export function getUserStream(id) {
+  var self = this; 
+  var endpoint = baseUrl + '/users/stream/' +id;
+  return fetch(endpoint, {
+    method: 'GET',
+    headers: {'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + 'TOKEN'}
+  }).then(function(res) {
+      if(!isSuccess(res.status)){
+        return res.json().then(function(json) {
+          return Promise.reject(json);
+        });
+      }
+      return res.json();
+  });
+};
+
+
+export function getProduct(id) {
+  var self = this;
+  var endpoint = baseUrl + '/products/' +id;
+  return fetch(endpoint, {
+    method: 'GET',
+    headers: {'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + 'TOKEN'}
+  }).then(function(res) {
+      if(!isSuccess(res.status)){
+        return res.json().then(function(json) {
+          return Promise.reject(json);
+        });
+      }
+      return res.json();
+  });
+};
+
+
+export function getSameProducts(id) {
+  var self = this; 
+  var endpoint = baseUrl + '/products/sameproducts/' +id;
+  return fetch(endpoint, {
+    method: 'GET',
+    headers: {'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + 'TOKEN'}
+  }).then(function(res) {
+      if(!isSuccess(res.status)){
+        return res.json().then(function(json) {
+          return Promise.reject(json);
+        });
+      }
+      return res.json();
+  });
+};
+
 
 

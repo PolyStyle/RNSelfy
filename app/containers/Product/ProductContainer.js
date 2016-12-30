@@ -1,7 +1,12 @@
 import React, { PropTypes, Component } from 'react'
 import { ScrollView, View, Text, StyleSheet, Image, ListView, Dimensions, TouchableOpacity, InteractionManager} from 'react-native';
 import { Gear, Hamburger, Heart, TagLabel, MoreDots} from './../../components'
+import { fetchProduct, fetchSameProducts } from './../../redux/modules/products';
+import { connect } from 'react-redux';
+
+
 const { height,width } = Dimensions.get('window');
+
 
 const styles = StyleSheet.create({
   container: {
@@ -80,6 +85,8 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     borderRadius: 45,
+    borderColor: '#ffffff',
+    borderWidth: 1,
   },
   roundedBrand: { 
     width: 40,
@@ -94,7 +101,6 @@ const styles = StyleSheet.create({
     height: 90,
     marginRight: 10, 
   }
- 
 });
 
 
@@ -106,82 +112,13 @@ class ProductContainer extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      width: width,
-      
-    } 
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
-    const ds2 = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {
-      dataSource: ds.cloneWithRows([
-      {
-        itemPicture: 'https://images.solecollector.com/complex/image/upload/tjdabf6iwrxjcxvofqm0.jpg',
-        brandPicture: 'https://s-media-cache-ak0.pinimg.com/474x/e3/dc/15/e3dc15d1211ea0c80d73aaa463c8f5aa.jpg',
-      },
-      {
-        itemPicture: 'https://images.solecollector.com/complex/image/upload/puvwqgzqbvq9phqejn94.jpg', 
-        brandPicture: 'https://s-media-cache-ak0.pinimg.com/474x/79/e2/06/79e2068640f510a47c3289b6b049619f.jpg',
-      },
-      {
-        itemPicture: 'https://images.solecollector.com/complex/image/upload/g5iicvxvnvy2a9xrpw3f.jpg',
-        brandPicture: 'https://s-media-cache-ak0.pinimg.com/474x/b0/36/ad/b036ad71d95404df03616bd795b95759.jpg',
-      },
-      {
-        itemPicture: 'https://images.solecollector.com/complex/image/upload/ts8i5zwy8b7vwzscbcj5.jpg',
-        brandPicture: 'https://pbs.twimg.com/profile_images/562585381879549952/QUzYZhD1.jpeg',
-      },
-      {
-        itemPicture: 'https://images.solecollector.com/complex/image/upload/woe3us3kmhx8alsxcquf.jpg',
-        brandPicture: 'https://s-media-cache-ak0.pinimg.com/236x/39/26/d5/3926d54ee14b0def927e000117b208a7.jpg',
-      },
-      {
-        itemPicture: 'https://images.solecollector.com/complex/image/upload/uor9nn6gwoifqdvuuv2w.jpg',
-        brandPicture: 'http://www.2022mag.com/wp-content/uploads/2016/10/nike-logo-copy.jpg',
-      },
-      {
-        itemPicture: 'https://images.solecollector.com/complex/image/upload/r7feh1viqhuz6izazcqj.jpg',
-        brandPicture: 'http://www.2022mag.com/wp-content/uploads/2016/10/nike-logo-copy.jpg',
-      },
-      {
-        itemPicture: 'https://images.solecollector.com/complex/image/upload/ho5eykuwynnywerxtvhu.jpg',
-        brandPicture: 'http://www.2022mag.com/wp-content/uploads/2016/10/nike-logo-copy.jpg',
-      },
-      {
-        itemPicture: 'https://images.solecollector.com/complex/image/upload/epm7c5nilr4wxjoxa2d9.jpg',
-        brandPicture: 'http://www.2022mag.com/wp-content/uploads/2016/10/nike-logo-copy.jpg',
-      } 
-      ]),
-      dataSource2: ds2.cloneWithRows([
-      {
-        itemPicture: 'https://s-media-cache-ak0.pinimg.com/474x/41/a6/b4/41a6b4ab8885d0534e1547fbc4815e3f.jpg',
-        brandPicture: 'https://s-media-cache-ak0.pinimg.com/474x/e3/dc/15/e3dc15d1211ea0c80d73aaa463c8f5aa.jpg',
-      },
-      {
-        itemPicture: 'https://s-media-cache-ak0.pinimg.com/474x/70/eb/e8/70ebe8ff2103d6794e606e2e50ee10e2.jpg', 
-        brandPicture: 'https://s-media-cache-ak0.pinimg.com/474x/79/e2/06/79e2068640f510a47c3289b6b049619f.jpg',
-      },
-      {
-        itemPicture: 'https://s-media-cache-ak0.pinimg.com/236x/c7/50/e9/c750e9d4b939f6d780d6aec04b9a1e92.jpg',
-        brandPicture: 'https://s-media-cache-ak0.pinimg.com/474x/b0/36/ad/b036ad71d95404df03616bd795b95759.jpg',
-      },
-      {
-        itemPicture: 'https://s-media-cache-ak0.pinimg.com/474x/e9/d3/5a/e9d35a57733d1a0c77e348f996e7e55f.jpg',
-        brandPicture: 'https://pbs.twimg.com/profile_images/562585381879549952/QUzYZhD1.jpeg',
-      },
-      {
-        itemPicture: 'https://s-media-cache-ak0.pinimg.com/474x/8d/1f/4d/8d1f4ded3226bc85f98b23524e883541.jpg',
-        brandPicture: 'https://s-media-cache-ak0.pinimg.com/236x/39/26/d5/3926d54ee14b0def927e000117b208a7.jpg',
-      },
-      {
-        itemPicture: 'https://s-media-cache-ak0.pinimg.com/474x/be/d9/d5/bed9d54eceb7beed5a9f0bf3fb10eb82.jpg',
-        brandPicture: 'http://www.2022mag.com/wp-content/uploads/2016/10/nike-logo-copy.jpg',
-      }
-      ])
+      active: false,
     };
-
   }
 
   componentDidMount() {
+    this.props.dispatch(fetchProduct(this.props.id));
+    this.props.dispatch(fetchSameProducts(this.props.id));
     // Set a ratio. We should allow picture with the height between 1/2 and 3/2 of the width
     // TODO: too time consuming, needs to be refactored.
        Image.getSize(this.props.picture, (srcWidth, srcHeight) => {
@@ -194,7 +131,28 @@ class ProductContainer extends Component {
       }, error => {
         console.log('error:', error);
       });
-     
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    console.log(this.props);
+    if(!this.props.sameProductsList || 
+        this.props.sameProductsList.length == 0) {
+      return
+    } // Don't render similar products if this is unique
+
+
+    // add the current product to the list of all the other products,
+    // in this way this will always be rendered as first option
+      
+    let newList = [this.props.product].concat(this.props.sameProductsList)
+    
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    const newDataStore = ds.cloneWithRows(newList);
+    if(this.state.dataSource == null || (this.state.dataSource._cachedRowCount != newDataStore._cachedRowCount)){
+      this.setState({
+        dataSource: newDataStore,
+      });
+    }
   }
 
 
@@ -205,7 +163,7 @@ class ProductContainer extends Component {
   }
   _selectProduct(rowData){
     this.setState({
-      currentImage: rowData.itemPicture
+      currentImage: rowData.picture
     })
   }
 
@@ -220,44 +178,57 @@ class ProductContainer extends Component {
 
 
   render(){ 
-    return (
-      <ScrollView style={styles.container}>
-       <Image shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true} source={{uri:this.props.picture }} style={{ width: this.state.width, height: this.state.height }}>
-       </Image>
-       <View>
-          <ListView horizontal={true}
-            style={styles.productHolder}
-             showsHorizontalScrollIndicator={false}
-            dataSource={this.state.dataSource}
-            renderRow={(rowData) => 
-              <TouchableOpacity style={styles.productItem} onPress={this._selectProduct.bind(this,rowData)}> 
-              <View style={styles.productItem}>
-                <Image style={styles.roundedProduct} source={{uri:rowData.itemPicture }} />
-              </View>
-              </TouchableOpacity>
-            }
-          />
-        </View>
-       <View style={styles.descriptions}>
-        <View style={styles.iconContainer}>
-          <Heart active={this.props.active} style={styles.heartIcon} onPress={this.onPress.bind(this)}/>
-          <MoreDots style={styles.addIcon} onPress={this.onPress.bind(this)}/>
-        </View>
-        <View style={styles.separationLine} />
-        <Text style={styles.descriptionText}>By: {this.props.name} </Text>
-        <Text style={styles.descriptionText}>This is a detail description of something long.</Text>
-        <View style={styles.tagList}>
-          <Text style={styles.tagTitle}>Tags: </Text>
-          <TagLabel onPress={this._navigateToCollection.bind(this)} description="Sneakers" />
-          <TagLabel onPress={this._navigateToCollection.bind(this)} description="Daily Fashion" />
-          <TagLabel onPress={this._navigateToCollection.bind(this)} description="Trendy" />
-        </View>
-        <View style={styles.separationLine} />
-       </View>
-      </ScrollView>
-
-    )
+    if( this.props.sameProductsList && this.state.dataSource){
+      return (
+        <ScrollView style={styles.container}>
+         <Image shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true} source={{uri: this.state.currentImage || this.props.picture }} style={{ width: this.state.width, height: this.state.height }}>
+         </Image>
+         <View>
+            <ListView horizontal={true}
+              style={styles.productHolder}
+              removeClippedSubviews={false}
+              showsHorizontalScrollIndicator={false}
+              dataSource={this.state.dataSource}
+              renderRow={(rowData) => 
+                <TouchableOpacity style={styles.productItem} onPress={this._selectProduct.bind(this,rowData)}> 
+                <View style={styles.productItem}>
+                  <Image style={styles.roundedProduct} source={{uri:rowData.picture }} />
+                </View>
+                </TouchableOpacity>
+              }
+            />
+          </View>
+         <View style={styles.descriptions}>
+          <View style={styles.iconContainer}>
+            <Heart active={this.props.active} style={styles.heartIcon} onPress={this.onPress.bind(this)}/>
+            <MoreDots style={styles.addIcon} onPress={this.onPress.bind(this)}/>
+          </View>
+          <View style={styles.separationLine} />
+          <Text style={styles.descriptionText}>By: {this.props.name} </Text>
+          <Text style={styles.descriptionText}>This is a detail description of something long.</Text>
+          <View style={styles.tagList}>
+            <Text style={styles.tagTitle}>Tags: </Text>
+            <TagLabel onPress={this._navigateToCollection.bind(this)} description="Sneakers" />
+            <TagLabel onPress={this._navigateToCollection.bind(this)} description="Daily Fashion" />
+            <TagLabel onPress={this._navigateToCollection.bind(this)} description="Trendy" />
+          </View>
+          <View style={styles.separationLine} />
+         </View>
+        </ScrollView>
+      )
+    } else {
+    return (<View />)
+    }
   }
 }
 
-export default ProductContainer
+
+function mapStateToProps ({products}) {
+  return { 
+    product: products.currentProduct,
+    sameProductsList: products.sameProductsList,
+  }
+}
+
+
+export default connect(mapStateToProps)(ProductContainer)

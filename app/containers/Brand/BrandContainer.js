@@ -86,8 +86,6 @@ class BrandContainer extends Component{
   }
 
   componentDidMount() {
-    console.log('Component page Brands did mount')
-    console.log(this.props)
     this.props.dispatch(fetchBrand(this.props.id));
     this.props.dispatch(fetchBrandStream(this.props.id));
   }

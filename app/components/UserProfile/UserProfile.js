@@ -12,7 +12,6 @@ UserProfile.propTypes = {
 }
 
 export default function UserProfile (props) {
-  console.log(props.user)
   return (
     <View>
 

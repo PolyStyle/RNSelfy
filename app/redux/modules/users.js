@@ -1,10 +1,59 @@
 import {getFriends, getSubscribing } from './../../api/auth'
+import { getUser,getUserStream } from './../../api/api_proxy'
 
+
+
+
+// OLD PART 
 const ADD_USER = 'ADD_USER'
 const ADD_MULTIPLE_USERS = 'ADD_MULTIPLE_USERS'
 const USER_ONBOARDED = 'USER_ONBOARDED'
 const UPDATE_FRIENDS = 'UPDATE_FRIENDS'
 const UPDATE_SUBSCRIBING = 'UPDATE_SUBSCRIBING'
+
+const SET_CURRENT_USER = 'SET_CURRENT_USER'
+const SET_CURRENT_USER_STREAM = 'SET_CURRENT_USER_STREAM'
+const ADD_USER_STREAM = 'ADD_USER_STREAM'
+
+
+
+export function fetchUser(id){
+  return function(dispatch){
+    return getUser(id).then(function(user){
+      dispatch(setCurrentUser(user))
+    })
+  }
+}
+export function fetchUserStream(id){
+  return function(dispatch){
+    return getUserStream(id).then(function(userStream){
+      dispatch(addUserStream(userStream))
+      dispatch(setCurrentUserStream(userStream))
+    })
+  }
+}
+
+function addUserStream(userStream) {
+  return {
+    type: ADD_USER_STREAM,
+    userStream: userStream
+  }
+}
+
+function setCurrentUserStream(userStream) {
+  return {
+    type: SET_CURRENT_USER_STREAM,
+    userStream: userStream
+  }
+}
+
+
+function setCurrentUser( user ) {
+  return {
+    type: SET_CURRENT_USER,
+    user: user
+  }
+}
 
 export function addUser(id, user) {
   return {
@@ -21,7 +70,7 @@ function updateFriends(friends){
     friends
   }
 }
-function updateSubscribing(subscribing){ 
+function updateSubscribing(subscribing){  
   return {
     type: UPDATE_SUBSCRIBING,
     subscribing
@@ -65,6 +114,25 @@ const initialState = {
 
 export default function users (state = {}, action) { 
   switch (action.type) {
+     case SET_CURRENT_USER_STREAM:
+     console.log('+++++')
+     console.log(action.userStream);
+      return {
+        ...state,
+        currentUserStream: action.userStream
+      }
+    case ADD_USER_STREAM:
+      // TODO : needs to be added to an array, not just reinizialed every time
+      // ideally using the brand id as key to access the dictionary
+      return {
+        ...state,
+        userStreams: [action.userStream]
+      }
+    case SET_CURRENT_USER:
+      return {
+        ...state,
+        currentUser: action.user
+      }
     case UPDATE_FRIENDS:
       return {
         ...state,
