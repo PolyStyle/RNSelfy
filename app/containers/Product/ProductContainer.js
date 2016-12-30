@@ -178,25 +178,27 @@ class ProductContainer extends Component {
 
 
   render(){ 
-    if( this.props.sameProductsList && this.state.dataSource){
+    if( this.props.product){
       return (
         <ScrollView style={styles.container}>
          <Image shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true} source={{uri: this.state.currentImage || this.props.picture }} style={{ width: this.state.width, height: this.state.height }}>
          </Image>
          <View>
-            <ListView horizontal={true}
+            {this.state.dataSource &&
+              <ListView horizontal={true}
               style={styles.productHolder}
               removeClippedSubviews={false}
               showsHorizontalScrollIndicator={false}
               dataSource={this.state.dataSource}
               renderRow={(rowData) => 
-                <TouchableOpacity style={styles.productItem} onPress={this._selectProduct.bind(this,rowData)}> 
-                <View style={styles.productItem}>
-                  <Image style={styles.roundedProduct} source={{uri:rowData.picture }} />
-                </View>
-                </TouchableOpacity>
-              }
-            />
+                  <TouchableOpacity style={styles.productItem} onPress={this._selectProduct.bind(this,rowData)}> 
+                  <View style={styles.productItem}>
+                    <Image style={styles.roundedProduct} source={{uri:rowData.picture }} />
+                  </View>
+                  </TouchableOpacity>
+                }
+              />
+            }
           </View>
          <View style={styles.descriptions}>
           <View style={styles.iconContainer}>
@@ -204,7 +206,7 @@ class ProductContainer extends Component {
             <MoreDots style={styles.addIcon} onPress={this.onPress.bind(this)}/>
           </View>
           <View style={styles.separationLine} />
-          <Text style={styles.descriptionText}>By: {this.props.name} </Text>
+          <Text style={styles.descriptionText}>By: {this.props.product.Brand.displayName} </Text>
           <Text style={styles.descriptionText}>This is a detail description of something long.</Text>
           <View style={styles.tagList}>
             <Text style={styles.tagTitle}>Tags: </Text>
